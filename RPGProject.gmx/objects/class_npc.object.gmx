@@ -31,9 +31,9 @@ RANDOM_WALK = 2;
 FORWARD_BACK = 3;
 moveType = STILL;
 
-
-
-
+textFile = "npc_1_main_room.ini";
+textSource = working_directory + textFile;
+textSection = "default";
 </string>
           </argument>
         </arguments>
