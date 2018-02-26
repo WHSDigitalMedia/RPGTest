@@ -3,9 +3,26 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="2" name="datafiles">
-    <datafiles number="2" name="Text_Interactions">
-      <datafiles number="2" name="NPC_1">
+  <datafiles number="4" name="datafiles">
+    <datafile>
+      <name>item_data.ini</name>
+      <exists>-1</exists>
+      <size>551</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>item_data.ini</filename>
+    </datafile>
+    <datafiles number="4" name="Text_Interactions">
+      <datafiles number="4" name="NPC_1">
         <datafile>
           <name>npc_1_main_room.ini</name>
           <exists>-1</exists>
@@ -60,10 +77,13 @@
     <objects name="NPCs">
       <object>objects\class_npc</object>
       <object>objects\npc_1</object>
+      <object>objects\npc_2</object>
     </objects>
     <objects name="Controllers">
+      <object>objects\controller_map</object>
       <object>objects\controller_pause</object>
       <object>objects\controller_text</object>
+      <object>objects\controller_camera</object>
     </objects>
     <objects name="Environment">
       <object>objects\class_solid</object>
@@ -87,9 +107,10 @@
   <rooms name="rooms">
     <room>rooms\rm_main_menu</room>
     <room>rooms\rm_main_room</room>
-    <room>rooms\room_side_room</room>
+    <room>rooms\rm_side_room</room>
     <room>rooms\rm_pause_menu</room>
     <room>rooms\rm_map_menu</room>
+    <room>rooms\rm_inventory_menu</room>
     <room>rooms\rm_text_interaction</room>
   </rooms>
   <help>

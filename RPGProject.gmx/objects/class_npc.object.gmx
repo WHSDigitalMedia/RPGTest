@@ -30,7 +30,7 @@ STILL = 0;
 RANDOM_LOOK = 1;
 RANDOM_WALK = 2;
 FORWARD_BACK = 3;
-moveType = RANDOM_WALK;
+moveType = FORWARD_BACK;
 
 //random walk motion
 randomTime = random_range(2 * room_speed, 4 * room_speed);
