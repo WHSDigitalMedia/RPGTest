@@ -45,10 +45,18 @@ finalY = y;
 alarm_set(0, global.textAppearDelay);
 
 scrollSpeed = 10; //pixels per something... I don't actually know
+
+//creating surfaces - requires delay so that the pause
+//controller can draw the blurred sprite first
+alarm_set(1, global.textAppearDelay);
+sprTopSurf = -1;
+sprBottomSurf = -1;
 </string>
           </argument>
         </arguments>
       </action>
+    </event>
+    <event eventtype="2" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -69,15 +77,16 @@ scrollSpeed = 10; //pixels per something... I don't actually know
 //surfaces to cover the text scrolling out of the box
 topSurf = surface_create(width, padding);
 bottomSurf = surface_create(width, padding);
-surface_set_target(topSurf);
-draw_surface(application_surface, 0, 0);
-surface_set_target(bottomSurf);
-draw_surface(application_surface, 0, height);
-surface_reset_target();
+surface_copy_part(topSurf, 0, 0, application_surface, 
+    padding, 0, width, padding);
+surface_copy_part(bottomSurf, 0, 0, application_surface,
+    padding, padding + height, width, padding);
 sprTopSurf = sprite_create_from_surface(topSurf, 0, 0, width, padding, false, false, 0, 0);
-sprBottomSurf = sprite_create_from_surface(topSurf, 0, 0, width, padding, false, false, 0, 0);
+sprBottomSurf = sprite_create_from_surface(bottomSurf, 0, 0, width, padding, false, false, 0, 0);
 surface_free(topSurf);
 surface_free(bottomSurf);
+
+alarm_set(1, -1);
 </string>
           </argument>
         </arguments>
@@ -175,7 +184,7 @@ if (mouse_wheel_up() &amp;&amp; y &lt; finalY) {
             <kind>1</kind>
             <string>///Choosing a response
 //only allowed after all the textboxes have spawned in
-if (pos == instance_number(gui_textbox)) {
+if (pos == instance_number(gui_textbox) &amp;&amp; instance_exists(class_npc)) {
     ini_open(class_npc.textSource);
     if (ini_section_exists(class_npc.scriptSection)) {
         for (var i = 1; i &lt; 9; i++) { //number of possible inputs

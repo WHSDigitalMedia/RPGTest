@@ -39,6 +39,7 @@
       <sprite>sprites\spr_wall</sprite>
     </sprites>
     <sprite>sprites\spr_npc</sprite>
+    <sprite>sprites\spr_door</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -67,6 +68,7 @@
     <objects name="Environment">
       <object>objects\class_solid</object>
       <object>objects\class_wall</object>
+      <object>objects\class_door</object>
     </objects>
     <objects name="GUI">
       <object>objects\gui_textbox</object>
@@ -85,7 +87,9 @@
   <rooms name="rooms">
     <room>rooms\rm_main_menu</room>
     <room>rooms\rm_main_room</room>
+    <room>rooms\room_side_room</room>
     <room>rooms\rm_pause_menu</room>
+    <room>rooms\rm_map_menu</room>
     <room>rooms\rm_text_interaction</room>
   </rooms>
   <help>

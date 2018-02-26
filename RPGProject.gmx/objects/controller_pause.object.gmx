@@ -29,6 +29,7 @@
 global.UNPAUSE = 0;
 global.STANDARD_PAUSE = 1;
 global.TEXT_PAUSE = 2;
+global.MAP_PAUSE = 3;
 global.pause = global.UNPAUSE;
 
 intensity = 0.7; //the blur intensity
@@ -59,8 +60,8 @@ spr = -1; //the sprite the surface will draw
           <argument>
             <kind>1</kind>
             <string>///Toggling Pause
-if (keyboard_check_pressed(vk_escape)) {
-    if (room != rm_text_interaction) { //so player can't exit text
+if (room != rm_text_interaction) { //so player can't exit text
+    if (keyboard_check_pressed(vk_escape)) {
         //returns to the overworld
         if (global.pause != global.UNPAUSE) {
             texture_set_interpolation(false);
@@ -73,6 +74,18 @@ if (keyboard_check_pressed(vk_escape)) {
             global.pause = global.STANDARD_PAUSE;
             roomIndex = room;
             draw = true;
+        }
+    } else if (keyboard_check_pressed(ord("M"))) {
+        if (global.pause == global.MAP_PAUSE) {
+            room_goto(roomIndex);
+            global.pause = global.UNPAUSE;
+        } else if (room != rm_pause_menu) {
+            with (class_npc) {
+                persistent = false;
+            }
+            global.pause = global.MAP_PAUSE;
+            roomIndex = room;
+            room_goto(rm_map_menu);
         }
     }
 }
@@ -161,8 +174,8 @@ if (sprite_exists(spr)) {
           <argument>
             <kind>1</kind>
             <string>///Creates a sprite from the current view
-if global.pause != global.UNPAUSE {
-    if draw {
+if (global.pause &gt; global.UNPAUSE) {
+    if (draw) {
         //blurring
         texture_set_interpolation(true);
         var i, surface;
@@ -234,7 +247,9 @@ if global.pause != global.UNPAUSE {
             <kind>1</kind>
             <string>///draws the blurred background
 if (room == rm_pause_menu || room == rm_text_interaction) {
-    if sprite_exists(spr) draw_sprite(spr, 0, 0, 0); 
+    if sprite_exists(spr) {
+        draw_sprite(spr, 0, 0, 0); 
+    }
 }
 </string>
           </argument>
