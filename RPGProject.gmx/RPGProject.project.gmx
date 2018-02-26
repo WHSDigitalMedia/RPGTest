@@ -33,37 +33,49 @@
       <sprite>sprites\spr_main_menu_start</sprite>
     </sprites>
     <sprites name="Player">
-      <sprite>sprites\player_idle</sprite>
+      <sprite>sprites\spr_player</sprite>
     </sprites>
     <sprites name="Environment">
       <sprite>sprites\spr_wall</sprite>
     </sprites>
+    <sprite>sprites\spr_npc</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
+    <scripts name="Textboxes">
+      <script>scripts\end_conversation.gml</script>
+    </scripts>
     <scripts name="Buttons">
       <script>scripts\quit_game.gml</script>
       <script>scripts\set_text_color_white.gml</script>
     </scripts>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt_arial16</font>
+  </fonts>
   <objects name="objects">
     <object>objects\class_player</object>
     <objects name="NPCs">
       <object>objects\class_npc</object>
+      <object>objects\npc_1</object>
     </objects>
     <objects name="Controllers">
       <object>objects\controller_pause</object>
+      <object>objects\controller_text</object>
     </objects>
     <objects name="Environment">
       <object>objects\class_solid</object>
       <object>objects\class_wall</object>
     </objects>
-    <objects name="Buttons">
-      <object>objects\class_button</object>
-      <objects name="Main Menu">
-        <object>objects\main_menu_start_button</object>
-        <object>objects\main_menu_quit_button</object>
+    <objects name="GUI">
+      <object>objects\gui_textbox</object>
+      <objects name="Buttons">
+        <object>objects\class_button</object>
+        <objects name="Main Menu">
+          <object>objects\main_menu_start_button</object>
+          <object>objects\main_menu_quit_button</object>
+        </objects>
       </objects>
     </objects>
     <objects name="FX">

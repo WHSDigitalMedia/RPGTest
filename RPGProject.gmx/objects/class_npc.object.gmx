@@ -25,15 +25,302 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>STILL = 0;
+            <string>///Initialize Variables
+STILL = 0;
 RANDOM_LOOK = 1;
 RANDOM_WALK = 2;
 FORWARD_BACK = 3;
 moveType = STILL;
 
+triggerDist = 32;
+INIT_TRIGGER = 0;
+CURRENT_TRIGGER = 1;
+END_TRIGGER = 2;
+triggerStatus = END_TRIGGER;
+
+goFirst = false;
+
+DEFAULT = 0;
+CONTROLLER = 1;
+mode = DEFAULT;
+
 textFile = "npc_1_main_room.ini";
-textSource = working_directory + textFile;
+directory = working_directory + "Text_Interactions\NPC_1\";
+textSource = directory + textFile;
 textSection = "default";
+sprSection = "default-sprites";
+responseSection = "default-responses";
+scriptSection = "default-scripts";
+textCreated = false;
+responsesCreated = false;
+/* IMPORTANT NOTE
+* all responses' keys must come after 
+* the text keys in the INI file
+*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>612</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>-1</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_if_variable</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>mode</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>DEFAULT</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>422</id>
+        <kind>1</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Init interaction state machine
+visible = true; //just in case
+
+switch (triggerStatus) {
+    case INIT_TRIGGER:
+        persistent = true;
+        global.pause = global.TEXT_PAUSE;
+        with (controller_pause) {
+            draw = true;
+            roomIndex = room;
+        }
+        triggerStatus = CURRENT_TRIGGER;
+        break;
+    case CURRENT_TRIGGER:
+        if (distance_to_object(class_player) &gt; triggerDist) {
+            triggerStatus = END_TRIGGER;
+        }
+        break;
+    case END_TRIGGER:
+        if (distance_to_object(class_player) &lt; triggerDist) {
+            if (goFirst) {
+                triggerStatus = INIT_TRIGGER;
+            } else if (keyboard_check_pressed(ord('E'))) {
+                triggerStatus = INIT_TRIGGER;
+            }
+        }
+        break;
+    default: break;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>424</id>
+        <kind>2</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>612</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>-1</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_if_variable</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>mode</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>CONTROLLER</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>422</id>
+        <kind>1</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Get text and buttons
+ini_open(textSource);
+var pos = 0;
+
+if (!textCreated) {    
+    if (ini_section_exists(textSection)) {
+        //pulls all text and corresponding sprites into the textboxes
+        do {
+            //create the textboxes
+            with (instance_create(x, y, gui_textbox)) {
+                text = ini_read_string(other.textSection, string(pos), "error");
+                //use asset_get_index because GMS won't recognize a string
+                spr = asset_get_index(ini_read_string(other.sprSection, string(pos), "-1"));
+                //alternate the orientation of the sprite
+                orientation = pos % 2;
+                order = pos;
+            }
+            
+            //update the position value to loop through all of these
+            pos++;
+        } until (!ini_key_exists(textSection, string(pos))); //done when no more text to read
+    } else {
+        show_debug_message("Section does not exist!");
+        textCreated = true;
+    }
+    
+    textCreated = true;
+}
+
+//basically the same code as above
+if (!responsesCreated) {   
+    if (ini_section_exists(responseSection)) {
+        do {
+            //create textboxes
+            with (instance_create(x, y, gui_textbox)) {
+                text = ini_read_string(other.responseSection, string(pos), "error");
+                orientation = CENTER;
+                order = pos;
+            }
+            
+            pos++;
+        } until (!ini_key_exists(responseSection, string(pos))); //done when no more buttons to read
+    } else {
+        show_debug_message("Section does not exist!");
+        responsesCreated = true;
+    }
+    
+    responsesCreated = true;
+}
+
+ini_close();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>424</id>
+        <kind>2</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///mode control
+if (room == rm_text_interaction) {
+    mode = CONTROLLER;
+    visible = false;
+} else {
+    mode = DEFAULT;
+    visible = true;
+    textCreated = false;
+    responsesCreated = false;
+}
 </string>
           </argument>
         </arguments>

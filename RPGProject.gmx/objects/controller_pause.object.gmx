@@ -26,12 +26,15 @@
           <argument>
             <kind>1</kind>
             <string>///Initialize Variables
-global.roomIndex = rm_main_room;
-global.pause = false;
+global.UNPAUSE = 0;
+global.STANDARD_PAUSE = 1;
+global.TEXT_PAUSE = 2;
+global.pause = global.UNPAUSE;
 
 intensity = 0.7; //the blur intensity
 steps = 3; //also affects intensity but it's better to change the above value
 draw = false; //has the sprite been created
+roomIndex = rm_main_room; //room to return to
 spr = -1; //the sprite the surface will draw
 </string>
           </argument>
@@ -57,17 +60,17 @@ spr = -1; //the sprite the surface will draw
             <kind>1</kind>
             <string>///Toggling Pause
 if (keyboard_check_pressed(vk_escape)) {
-    //action varies on current room
-    switch (room) {
-        case rm_pause_menu:
+    if (room != rm_text_interaction) { //so player can't exit text
+        //returns to the overworld
+        if (global.pause != global.UNPAUSE) {
             texture_set_interpolation(false);
-            room_goto(global.roomIndex);
-            break;
-        default: //what to do if in overworld
-            global.roomIndex = room;
-            global.pause = true;
+            room_goto(roomIndex);
+            global.pause = global.UNPAUSE;
+        } else { //saves the player's current room
+            global.pause = global.STANDARD_PAUSE;
+            roomIndex = room;
             draw = true;
-            break;
+        }
     }
 }
 </string>
@@ -91,13 +94,15 @@ if (keyboard_check_pressed(vk_escape)) {
           <argument>
             <kind>1</kind>
             <string>///What to do with player
-if (room == rm_pause_menu) {
+if (room == rm_pause_menu || room == rm_text_interaction) {
+    //basically makes the player temporarily "not exist"
     with (class_player) {
         allowMovement = false;
         allowInput = false;
         visible = false;
     }
 } else {
+    //brings the player back
     with (class_player) {
         allowMovement = true;
         allowInput = true;
@@ -127,7 +132,7 @@ if (room == rm_pause_menu) {
           <argument>
             <kind>1</kind>
             <string>///Creates a sprite from the current view
-if global.pause {
+if global.pause != global.UNPAUSE {
     if draw {
         //blurring
         texture_set_interpolation(true);
@@ -165,7 +170,15 @@ if global.pause {
         draw = false; //so draw only runs once
         
         //Go to pause room
-        room_goto(rm_pause_menu);
+        switch (global.pause) {
+            case global.STANDARD_PAUSE:
+                room_goto(rm_pause_menu);
+                break;
+            case global.TEXT_PAUSE:
+                room_goto(rm_text_interaction);
+                break;
+            default: break;
+        }
     }
 }
 </string>
@@ -191,10 +204,8 @@ if global.pause {
           <argument>
             <kind>1</kind>
             <string>///draws the blurred background
-if (room == rm_pause_menu) {
-    if room == rm_pause_menu {
-        if sprite_exists(spr) draw_sprite(spr, 0, 0, 0); 
-    }
+if (room == rm_pause_menu || room == rm_text_interaction) {
+    if sprite_exists(spr) draw_sprite(spr, 0, 0, 0); 
 }
 </string>
           </argument>

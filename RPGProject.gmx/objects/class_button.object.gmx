@@ -2,7 +2,7 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -29,6 +29,7 @@
 text = "";
 textColor = c_black;
 textAlpha = 1;
+textFont = fnt_arial16;
 textXPos = 0;
 textYPos = 0;
 
@@ -130,6 +131,7 @@ draw_self();
 draw_set_halign(fa_center); //center align
 draw_set_valign(fa_middle); 
 
+draw_set_font(textFont);
 draw_text_colour(x + textXPos, y + textYPos, text, textColor, textColor, textColor, textColor, textAlpha);
 
 draw_set_halign(fa_left); //reset align
