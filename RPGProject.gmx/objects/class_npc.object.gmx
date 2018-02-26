@@ -30,20 +30,40 @@ STILL = 0;
 RANDOM_LOOK = 1;
 RANDOM_WALK = 2;
 FORWARD_BACK = 3;
-moveType = STILL;
+moveType = RANDOM_WALK;
 
+//random walk motion
+randomTime = random_range(2 * room_speed, 4 * room_speed);
+xTarg = x;
+yTarg = y;
+moveSpeed = 2;
+deadband = 2;
+maxDist = 64;
+alarm_set(0, -1);
+
+//forward back motion
+initX = x;
+finalX = x + 64;
+initY = y;
+finalY = y;
+FORWARD = 0;
+BACKWARD = 1;
+dir = FORWARD;
+
+//talking to the player
 triggerDist = 32;
 INIT_TRIGGER = 0;
 CURRENT_TRIGGER = 1;
 END_TRIGGER = 2;
 triggerStatus = END_TRIGGER;
+goFirst = false; //whether the player has to press 'e'
 
-goFirst = false;
-
+//mode
 DEFAULT = 0;
 CONTROLLER = 1;
 mode = DEFAULT;
 
+//text location
 textFile = "npc_1_main_room.ini";
 directory = working_directory + "Text_Interactions\NPC_1\";
 textSource = directory + textFile;
@@ -57,6 +77,40 @@ responsesCreated = false;
 * all responses' keys must come after 
 * the text keys in the INI file
 */
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Choose a random direction to walk in
+do {
+    var goX = choose(true, false);
+    if (goX) {
+        xTarg = x + irandom_range(-maxDist, maxDist);
+    } else {
+        yTarg = y + irandom_range(-maxDist, maxDist);
+    }
+} until (!place_meeting(xTarg, yTarg, class_solid));
+
+randomTime = random_range(2 * room_speed, 4 * room_speed);
+alarm_set(0, randomTime);
 </string>
           </argument>
         </arguments>
@@ -121,7 +175,7 @@ responsesCreated = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Init interaction state machine
+            <string>///Interaction state machine
 visible = true; //just in case
 
 switch (triggerStatus) {
@@ -149,6 +203,66 @@ switch (triggerStatus) {
         }
         break;
     default: break;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Movement code
+switch (moveType) {
+    case RANDOM_WALK:
+        //randomly choose locations and move to them
+        if (x == xTarg &amp;&amp; y = yTarg) {
+            if (alarm[0] == -1) {
+                alarm_set(0, randomTime);
+            }
+        } else {
+            //to prevent jittering
+            if (point_distance(x, y, xTarg, yTarg) &lt;= deadband) {
+                xTarg = x;
+                yTarg = y;
+            }
+            var xMove = sign(xTarg - x) * moveSpeed;
+            var yMove = sign(yTarg - y) * moveSpeed;
+            x += xMove;
+            y += yMove;
+        }
+        break;
+    case FORWARD_BACK:
+        //switch between back and forth
+        if (dir == FORWARD) {
+            var xMove = sign(finalX - x) * moveSpeed;
+            var yMove = sign(finalY - y) * moveSpeed;
+            if (x == finalX &amp;&amp; y == finalY) {
+                dir = BACKWARD;
+            }
+        } else if (dir == BACKWARD) {
+            var xMove = sign(initX - x) * moveSpeed;
+            var yMove = sign(initY - y) * moveSpeed;
+            if (x == initX &amp;&amp; y == initY) {
+                dir = FORWARD;
+            }
+        }
+        x += xMove;
+        y += yMove;
+        break;
+    default: break; //still and random look
 }
 </string>
           </argument>
