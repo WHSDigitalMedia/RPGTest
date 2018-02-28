@@ -76,6 +76,7 @@
     </scripts>
     <scripts name="Inventory">
       <script>scripts\inventory_add.gml</script>
+      <script>scripts\inventory_equip.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">

@@ -49,8 +49,7 @@ viewMode = EQUIPPABLE;
 
 buttonsCreated = false;
 
-inventory_add("item_sword", "item_hat", 
-    "item_health_potion", "item_speed_potion", "item_coffee_cup");
+inventory_add("Hat", "Sword", "Hat", "Health Potion", "Speed Potion", "Coffee Cup");
 </string>
           </argument>
         </arguments>
@@ -151,6 +150,13 @@ if (keyboard_check_pressed(ord('Z'))) {
             <kind>1</kind>
             <string>///Create buttons
 if (!buttonsCreated) {    
+    //get rid of any old buttons
+    with (class_button) {
+        if (sprite_index == spr_inv_button) {
+            instance_destroy();
+        }
+    }
+    
     switch (viewMode) {
         case EQUIPPABLE:        
             //create buttons with items
@@ -161,9 +167,9 @@ if (!buttonsCreated) {
                         text = ds_list_find_value(other.equippableList, i);
                         overAction = set_text_color_white;
                         leaveAction = set_text_color_black;
+                        clickAction = inventory_equip;
                         textAlign = LEFT;
-                        textXPos = 4;
-                        textYPos = sprite_get_height(spr_inv_button)/2;
+                        textXPos = -sprite_width/2 + 4;
                     }
                 }
             }
@@ -178,9 +184,9 @@ if (!buttonsCreated) {
                         text = ds_list_find_value(other.consumableList, i);
                         overAction = set_text_color_white;
                         leaveAction = set_text_color_black;
+                        clickAction = inventory_equip;
                         textAlign = LEFT;
-                        textXPos = 4;
-                        textYPos = sprite_get_height(spr_inv_button)/2;
+                        textXPos = -sprite_width/2 + 4;
                     }
                 }
             }
@@ -195,9 +201,9 @@ if (!buttonsCreated) {
                         text = ds_list_find_value(other.miscList, i);
                         overAction = set_text_color_white;
                         leaveAction = set_text_color_black;
+                        clickAction = inventory_equip;
                         textAlign = LEFT;
-                        textXPos = 4;
-                        textYPos = sprite_get_height(spr_inv_button)/2;
+                        textXPos = -sprite_width/2 + 4;
                     }
                 }
             }
