@@ -49,7 +49,7 @@ viewMode = EQUIPPABLE;
 
 buttonsCreated = false;
 
-inventory_add("Hat", "Sword", "Hat", "Health Potion", "Speed Potion", "Coffee Cup");
+//inventory_add("Hat", "Sword", "Hat", "Health Potion", "Speed Potion", "Coffee Cup");
 </string>
           </argument>
         </arguments>
@@ -174,8 +174,7 @@ if (!buttonsCreated) {
                 }
             }
             break;
-        case CONSUMABLE:
-            
+        case CONSUMABLE: 
             //create buttons with items
             if (ds_exists(consumableList, ds_type_list)) {
                 for (var i = 0; i &lt; ds_list_size(consumableList); i++) {
@@ -192,7 +191,6 @@ if (!buttonsCreated) {
             }
             break;
         case MISCELLANEOUS:
-            
             //create buttons with items
             if (ds_exists(miscList, ds_type_list)) {
                 for (var i = 0; i &lt; ds_list_size(miscList); i++) {
@@ -210,6 +208,21 @@ if (!buttonsCreated) {
             break;
         default: break;
     }
+    
+    if (ds_exists(equippedList, ds_type_list)) {
+        for (var i = 0; i &lt; ds_list_size(equippedList); i++) {
+            with (instance_create(room_width/3, room_height/2 + i * 64, class_button)) {
+                sprite_index = spr_inv_button;
+                text = ds_list_find_value(other.equippedList, i);
+                overAction = set_text_color_white;
+                leaveAction = set_text_color_black;
+                clickAction = inventory_unequip;
+                textAlign = LEFT;
+                textXPos = -sprite_width/2 + 4;
+            }
+        }
+    }
+    
     buttonsCreated = true;
 }
 </string>
@@ -261,6 +274,94 @@ if (ds_exists(equippedList, ds_type_list)) {
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>612</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>-1</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_if_variable</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>room</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>rm_inventory_menu</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>422</id>
+        <kind>1</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw player stats
+draw_text(room_width/3 - 128, 64 + 48 * 0, "Atk");
+draw_text(room_width/3 - 128, 64 + 48 * 1, "Def");
+draw_text(room_width/3 - 128, 64 + 48 * 2, "Spd");
+draw_text(room_width/3 - 128, 64 + 48 * 3, "Acc");
+draw_text(room_width/3 - 128, 64 + 48 * 4, "HP");
+
+for (var i = 0; i &lt; array_length_1d(class_player.stat); i++) {
+    draw_text(room_width/3, 64 + i * 48, class_player.stat[i]);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>424</id>
+        <kind>2</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
   </events>

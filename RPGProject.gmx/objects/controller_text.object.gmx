@@ -44,7 +44,7 @@ initY = y;
 finalY = y;
 alarm_set(0, global.textAppearDelay);
 
-scrollSpeed = 10; //pixels per something... I don't actually know
+scrollSpeed = 20; //pixels per something maybe?... I don't actually know
 
 //creating surfaces - requires delay so that the pause
 //controller can draw the blurred sprite first
@@ -192,10 +192,20 @@ if (pos == instance_number(gui_textbox) &amp;&amp; instance_exists(class_npc)) {
             if (keyboard_check_pressed(ord(string(i)))) {
                 //get corresponding script
                 var script = asset_get_index(ini_read_string(class_npc.scriptSection, string(i), "noone"));
+                //get corresponding arguments
+                var arg;
+                //set default values for arg for script_execute_ext
+                arg[1] = ""; arg[2] = ""; arg[3] = ""; arg[4] = ""; arg[5] = "";
+                for (var n = 1; n &lt; array_length_1d(arg); n++) {
+                    arg[n] = ini_read_string(class_npc.argumentSection, string(i) + "_" + string(n), "");
+                }
+                
                 //if the script does not exist, don't do anything
                 if (script != noone) {
-                    script_execute(script);
+                    script_execute_ext(script, arg[1], arg[2], arg[3], arg[4], arg[5]);
                     i = 9;
+                    ini_close();
+                    end_conversation();
                 }
             }
         }

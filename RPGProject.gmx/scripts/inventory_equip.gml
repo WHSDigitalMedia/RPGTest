@@ -1,8 +1,9 @@
+#define inventory_equip
 ///inventory_equip()
 //only applies to equippable items
 if (controller_inventory.viewMode == controller_inventory.EQUIPPABLE) {
-    var _tempList = ds_list_create(); //see line 33's code block
     ini_open("item_data.ini");
+    var _tempList = ds_list_create(); //see line 33's code block
     var canEquip = true; //can we even equip this item
     var type = "";
     
@@ -34,6 +35,15 @@ if (controller_inventory.viewMode == controller_inventory.EQUIPPABLE) {
     if (canEquip) {
         //add to equipped list
         ds_list_add(controller_inventory.equippedList, other.text);
+        //change stat value
+        var n = 1;
+        do {
+            var amt = ini_read_real(text, "amt" + string(n), 0);
+            with (class_player) {
+                stat[ini_read_real(other.text, "stat" + string(n), 0)] += amt;
+            }
+            n++;
+        } until (!ini_key_exists(text, "stat" + string(n)));
         
         var numBefore = 0; //number of duplicate items before this one
         var yPos = 0;
@@ -83,9 +93,36 @@ if (controller_inventory.viewMode == controller_inventory.EQUIPPABLE) {
         }
     }
     
-    ini_close();
+
     //get rid of the ds_list to prevent memory leaking
     if (ds_exists(_tempList, ds_type_list)) {
         ds_list_destroy(_tempList);
     }
+    ini_close();
+}
+
+#define inventory_unequip
+///inventory_unequip()
+//only applies to equippable items
+if (controller_inventory.viewMode == controller_inventory.EQUIPPABLE) {
+    //make sure we have enough room in the inventory to put this back
+    if (ds_list_size(controller_inventory.equippableList) < controller_inventory.equippableMax) {
+        ds_list_add(controller_inventory.equippableList, text);
+        var pos = ds_list_find_index(controller_inventory.equippedList, text);
+        ds_list_delete(controller_inventory.equippedList, pos);
+        
+        ini_open("item_data.ini");
+        
+        var n = 1;
+        do {
+            var amt = ini_read_real(text, "amt" + string(n), 0);
+            with (class_player) {
+                stat[ini_read_real(other.text, "stat" + string(n), 0)] -= amt;
+            }
+            n++;
+        } until (!ini_key_exists(text, "stat" + string(n)));
+        
+        ini_close();
+    }
+    controller_inventory.buttonsCreated = false;
 }

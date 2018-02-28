@@ -78,6 +78,7 @@
       <script>scripts\inventory_add.gml</script>
       <script>scripts\inventory_equip.gml</script>
     </scripts>
+    <script>scripts\script_execute_ext.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_arial16</font>

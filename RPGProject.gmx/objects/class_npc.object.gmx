@@ -71,6 +71,7 @@ textSection = "default";
 sprSection = "default-sprites";
 responseSection = "default-responses";
 scriptSection = "default-scripts";
+argumentSection = "default-arguments";
 textCreated = false;
 responsesCreated = false;
 /* IMPORTANT NOTE

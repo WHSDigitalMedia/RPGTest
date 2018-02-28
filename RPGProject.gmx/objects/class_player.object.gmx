@@ -36,6 +36,20 @@ UP = ord("W");
 LEFT = ord("A");
 DOWN = ord("S");
 RIGHT = ord("D");
+
+ATK = 0;
+DEF = 1;
+SPD = 2;
+ACC = 3;
+HP = 4;
+
+stat[0] = 10;
+stat[1] = 10;
+stat[2] = 10;
+stat[3] = 10;
+stat[4] = 10;
+
+statLevelCap = 50;
 </string>
           </argument>
         </arguments>
@@ -116,6 +130,31 @@ if (allowMovement &amp;&amp; allowInput) {
             <kind>1</kind>
             <string>///emergency restart
 if (keyboard_check_pressed(ord("R"))) game_restart();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Combat
+//clamping of stat values
+for (var i = 0; i &lt; array_length_1d(stat); i++) {
+    stat[i] = clamp(stat[i], 0, statLevelCap);
+}
 </string>
           </argument>
         </arguments>
