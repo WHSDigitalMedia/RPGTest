@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>///Initialize Variables
+depth = -9999;
+
 text = "";
 textColor = c_black;
 textAlpha = 1;
@@ -46,6 +48,11 @@ mouseStatus = END_EXIT;
 overAction = noone;
 leaveAction = noone;
 clickAction = noone;
+
+SINGLE_USE = 0;
+MULTI_USE = 1;
+mode = MULTI_USE;
+done = false;
 </string>
           </argument>
         </arguments>
@@ -69,7 +76,7 @@ clickAction = noone;
           <argument>
             <kind>1</kind>
             <string>///Mouse actions
-if (sprite_index != -1) {
+if (sprite_index != -1 &amp;&amp; !done) {
     var mouseIsOver = point_in_rectangle(mouse_x, mouse_y, x - sprite_width/2, y - sprite_height/2, x + sprite_width/2, y + sprite_height/2);
     //checks to see if the mouse is over
     if (mouseIsOver) {
@@ -82,6 +89,9 @@ if (sprite_index != -1) {
         if (mouse_check_button_pressed(mb_left)) {
             if (script_exists(clickAction)) {
                 script_execute(clickAction);
+                if (mode == SINGLE_USE) {
+                    done = true;
+                }
             }
         }
     }

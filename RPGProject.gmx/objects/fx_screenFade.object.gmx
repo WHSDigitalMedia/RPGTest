@@ -32,18 +32,15 @@ fadeDuration = room_speed * 1; //where room_speed = 1 sec
 fadeSpeed = 1/fadeDuration;
 
 targetRoom = rm_main_menu;
+xTarg = x;
+yTarg = y;
 
 fadeOutComplete = false;
 fadeInComplete = false;
 
-//prevents the player from moving mid transition
-if (instance_exists(class_player)) {
-    with (class_player) {
-        visible = false;
-        allowMovement = false;
-        allowInput = false;
-    }
-}
+MENU_TRANSITION = 0;
+ROOM_TRANSITION = 1;
+mode = MENU_TRANSITION;
 
 //delay after fade in to allow the player to move again
 alarm_set(0, -1);
@@ -105,24 +102,31 @@ instance_destroy();
             <string>///Fade Control
 if (!fadeOutComplete) {
     myAlpha += fadeSpeed;
-    
-    if (myAlpha == 1) {
-        fadeOutComplete = true;
-        room_goto(targetRoom);
-    }
-} else if (!fadeInComplete) {
-    //bring back visibility of the player
-    if (instance_exists(class_player)) {
+    //prevents the player from moving mid transition
+    if (mode == ROOM_TRANSITION &amp;&amp; instance_exists(class_player)) {
         with (class_player) {
-            visible = true;
+            allowMovement = false;
+            allowInput = false;
         }
     }
     
+    if (myAlpha == 1) {
+        fadeOutComplete = true;
+        with (class_player) {
+            x = other.xTarg;
+            y = other.yTarg;
+            visible = true;
+        }
+        room_goto(targetRoom);
+    }
+} else if (!fadeInComplete) {
     myAlpha -= fadeSpeed;
     
     if (myAlpha == 0) {
         fadeInComplete = true;
-        alarm_set(0, moveDelay);
+        if (mode == ROOM_TRANSITION) {
+            alarm_set(0, moveDelay);
+        }
     }
 }
 </string>

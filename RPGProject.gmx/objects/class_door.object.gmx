@@ -108,10 +108,9 @@ if (place_meeting(x, y, class_player) &amp;&amp; keyboard_check_pressed(ord("E")
         //go through if unlocked
         with (instance_create(x, y, fx_screenFade)) {
             targetRoom = other.roomTarg;
-        }
-        with (class_player) {
-            x = other.xTarg;
-            y = other.yTarg;
+            xTarg = other.xTarg;
+            yTarg = other.yTarg;
+            mode = ROOM_TRANSITION;
         }
     }
 }
@@ -186,7 +185,7 @@ if (place_meeting(x, y, class_player) &amp;&amp; keyboard_check_pressed(ord("E")
         <exetype>2</exetype>
         <functionname></functionname>
         <codestring></codestring>
-        <whoName>self</whoName>
+        <whoName>class_door</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
@@ -198,10 +197,9 @@ if (point_in_rectangle(mouse_x, mouse_y, x - sprite_width/2, y - sprite_height/2
         if (!lock) {
             with (instance_create(x, y, fx_screenFade)) {
                 targetRoom = other.roomTarg;
-            }
-            with (class_player) {
-                x = other.xTarg;
-                y = other.yTarg;
+                xTarg = other.xTarg;
+                yTarg = other.yTarg;
+                mode = ROOM_TRANSITION;
             }
             global.pause = global.UNPAUSE;
         }
