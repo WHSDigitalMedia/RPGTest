@@ -10,8 +10,8 @@
   <persistent>-1</persistent>
   <colour>12632256</colour>
   <showcolour>-1</showcolour>
-  <code></code>
-  <enableViews>-1</enableViews>
+  <code>texture_set_interpolation(false);</code>
+  <enableViews>0</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
@@ -41,7 +41,7 @@
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
   </backgrounds>
   <views>
-    <view visible="-1" objName="class_player" xview="0" yview="0" wview="640" hview="360" xport="0" yport="0" wport="1280" hport="720" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
+    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="640" hview="360" xport="0" yport="0" wport="1280" hport="720" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
@@ -66,6 +66,10 @@
     <instance objName="class_door" x="96" y="32" name="inst_7CDBAC3E" locked="0" code="roomTarg = rm_side_room;&#xA;lock = true;&#xA;xTarg = 224;&#xA;yTarg = 160;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="class_door" x="192" y="64" name="inst_5955EDB6" locked="0" code="roomTarg = rm_side_room;&#xA;xTarg = 224;&#xA;yTarg = 160;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="controller_camera" x="256" y="128" name="inst_DEC63217" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="controller_inventory" x="96" y="192" name="inst_D2441E2A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="hud_pause_button" x="224" y="192" name="inst_B015A519" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="hud_inventory_button" x="192" y="224" name="inst_32BE9688" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="hud_map_button" x="224" y="256" name="inst_3983F939" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

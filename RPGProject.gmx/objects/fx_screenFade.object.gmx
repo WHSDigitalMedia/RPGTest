@@ -35,6 +35,51 @@ targetRoom = rm_main_menu;
 
 fadeOutComplete = false;
 fadeInComplete = false;
+
+//prevents the player from moving mid transition
+if (instance_exists(class_player)) {
+    with (class_player) {
+        visible = false;
+        allowMovement = false;
+        allowInput = false;
+    }
+}
+
+//delay after fade in to allow the player to move again
+alarm_set(0, -1);
+moveDelay = 3;
+moveTimer = moveDelay * room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Bring the player back
+if (instance_exists(class_player)) {
+    with (class_player) {
+        allowMovement = true;
+        allowInput = true;
+    }
+}
+
+instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -59,11 +104,6 @@ fadeInComplete = false;
             <kind>1</kind>
             <string>///Fade Control
 if (!fadeOutComplete) {
-    if (instance_exists(class_player)) {
-        with (class_player) {
-            visible = false;
-        }
-    }
     myAlpha += fadeSpeed;
     
     if (myAlpha == 1) {
@@ -71,16 +111,18 @@ if (!fadeOutComplete) {
         room_goto(targetRoom);
     }
 } else if (!fadeInComplete) {
+    //bring back visibility of the player
+    if (instance_exists(class_player)) {
+        with (class_player) {
+            visible = true;
+        }
+    }
+    
     myAlpha -= fadeSpeed;
     
     if (myAlpha == 0) {
         fadeInComplete = true;
-        if (instance_exists(class_player)) {
-            with (class_player) {
-                visible = true;
-            }
-        }
-        instance_destroy();
+        alarm_set(0, moveDelay);
     }
 }
 </string>

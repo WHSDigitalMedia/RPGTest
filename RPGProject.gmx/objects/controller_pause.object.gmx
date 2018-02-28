@@ -63,45 +63,11 @@ spr = -1; //the sprite the surface will draw
             <string>///Toggling Pause
 if (room != rm_text_interaction) { //so player can't exit text
     if (keyboard_check_pressed(vk_escape)) {
-        //returns to the overworld
-        if (global.pause != global.UNPAUSE) {
-            texture_set_interpolation(false);
-            room_goto(roomIndex);
-            global.pause = global.UNPAUSE;
-        } else { //saves the player's current room
-            with (class_npc) { //they're annoying
-                persistent = false;
-            }
-            global.pause = global.STANDARD_PAUSE;
-            roomIndex = room;
-            draw = true;
-        }
-    //toggling the map
+        pause_game(); //toggling the standard pause
     } else if (keyboard_check_pressed(ord("M"))) {
-        if (global.pause == global.MAP_PAUSE) {
-            room_goto(roomIndex);
-            global.pause = global.UNPAUSE;
-        } else if (room != rm_pause_menu &amp;&amp; room != rm_text_interaction &amp;&amp; room != rm_inventory_menu) {
-            with (class_npc) {
-                persistent = false;
-            }
-            global.pause = global.MAP_PAUSE;
-            roomIndex = room;
-            room_goto(rm_map_menu);
-        }
-    //toggling the inventory
+        open_map(); //toggling the map
     } else if (keyboard_check_pressed(ord("I"))) {
-        if (global.pause == global.INVENTORY_PAUSE) {
-            room_goto(roomIndex);
-            global.pause = global.UNPAUSE;
-        } else if (room != rm_pause_menu &amp;&amp; room != rm_text_interaction &amp;&amp; room != rm_map_menu) {
-            with (class_npc) {
-                persistent = false;
-            }
-            global.pause = global.INVENTORY_PAUSE;
-            roomIndex = room;
-            room_goto(rm_inventory_menu);
-        }
+        open_inventory(); //toggling the inventory
     }
 }
 </string>
@@ -125,21 +91,14 @@ if (room != rm_text_interaction) { //so player can't exit text
           <argument>
             <kind>1</kind>
             <string>///What to do with player
-if (room == rm_pause_menu || room == rm_text_interaction || room == rm_map_menu || room == rm_inventory_menu) {
+if (global.pause != global.UNPAUSE &amp;&amp; (room == rm_pause_menu || room == rm_map_menu || room == rm_inventory_menu)) {
     //basically makes the player temporarily "not exist"
     with (class_player) {
         allowMovement = false;
         allowInput = false;
         visible = false;
     }
-} else {
-    //brings the player back
-    with (class_player) {
-        allowMovement = true;
-        allowInput = true;
-        visible = true;
-    }
-}
+} //what to do when unpausing is in the toggle pause event
 </string>
           </argument>
         </arguments>

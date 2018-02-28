@@ -2,7 +2,7 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
+  <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -32,6 +32,11 @@ textAlpha = 1;
 textFont = fnt_arial16;
 textXPos = 0;
 textYPos = 0;
+
+LEFT = 0;
+CENTER = 1;
+RIGHT = 2;
+textAlign = CENTER;
 
 INIT_OVER = 0;
 END_OVER = 1;
@@ -128,13 +133,19 @@ if (sprite_index != -1) {
             <string>///Draw the text
 draw_self();
 
-draw_set_halign(fa_center); //center align
-draw_set_valign(fa_middle); 
+if (textAlign == LEFT) {
+    draw_set_halign(fa_left);
+} else if (textAlign == CENTER) {
+    draw_set_halign(fa_center);
+} else if (textAlign == RIGHT) {
+    draw_set_halign(fa_right);
+}
+draw_set_valign(fa_middle);
 
 draw_set_font(textFont);
 draw_text_colour(x + textXPos, y + textYPos, text, textColor, textColor, textColor, textColor, textAlpha);
 
-draw_set_halign(fa_left); //reset align
+draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 </string>
           </argument>

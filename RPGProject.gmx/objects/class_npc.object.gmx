@@ -180,6 +180,7 @@ visible = true; //just in case
 
 switch (triggerStatus) {
     case INIT_TRIGGER:
+        //draw text
         persistent = true;
         global.pause = global.TEXT_PAUSE;
         with (controller_pause) {
@@ -192,12 +193,17 @@ switch (triggerStatus) {
         if (distance_to_object(class_player) &gt; triggerDist) {
             triggerStatus = END_TRIGGER;
         }
+        //can retrigger event if player interacts
+        if (keyboard_check_pressed(ord('E'))) {
+            triggerStatus = INIT_TRIGGER;
+        }
         break;
     case END_TRIGGER:
         if (distance_to_object(class_player) &lt; triggerDist) {
-            if (goFirst) {
+            if (goFirst) { //automatically triggers if goFirst is enabled
                 triggerStatus = INIT_TRIGGER;
             } else if (keyboard_check_pressed(ord('E'))) {
+                //otherwise will wait for the player to interact
                 triggerStatus = INIT_TRIGGER;
             }
         }

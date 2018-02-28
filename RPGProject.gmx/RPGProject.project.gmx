@@ -47,7 +47,11 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprites name="Buttons">
+      <sprite>sprites\spr_backpack</sprite>
+      <sprite>sprites\spr_map</sprite>
+      <sprite>sprites\spr_pause_button</sprite>
       <sprite>sprites\spr_main_menu_start</sprite>
+      <sprite>sprites\spr_inv_button</sprite>
     </sprites>
     <sprites name="Player">
       <sprite>sprites\spr_player</sprite>
@@ -67,6 +71,11 @@
     <scripts name="Buttons">
       <script>scripts\quit_game.gml</script>
       <script>scripts\set_text_color_white.gml</script>
+      <script>scripts\pause_game.gml</script>
+      <script>scripts\view_equippable.gml</script>
+    </scripts>
+    <scripts name="Inventory">
+      <script>scripts\inventory_add.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">
@@ -83,6 +92,7 @@
       <object>objects\controller_map</object>
       <object>objects\controller_pause</object>
       <object>objects\controller_text</object>
+      <object>objects\controller_inventory</object>
       <object>objects\controller_camera</object>
     </objects>
     <objects name="Environment">
@@ -94,6 +104,16 @@
       <object>objects\gui_textbox</object>
       <objects name="Buttons">
         <object>objects\class_button</object>
+        <objects name="HUD">
+          <object>objects\hud_pause_button</object>
+          <object>objects\hud_inventory_button</object>
+          <object>objects\hud_map_button</object>
+        </objects>
+        <objects name="Inventory">
+          <object>objects\inv_menu_equippable_button</object>
+          <object>objects\inv_menu_consumable_button</object>
+          <object>objects\inv_menu_misc_button</object>
+        </objects>
         <objects name="Main Menu">
           <object>objects\main_menu_start_button</object>
           <object>objects\main_menu_quit_button</object>
