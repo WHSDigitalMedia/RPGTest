@@ -87,8 +87,112 @@ Note that this explanation will only cover variables whose purpose may not be re
 
 
 ## Textboxes
+#### Create Event
+```
+///Initialize Variables
+text = "";
+textFont = fnt_arial16;
+textColor = c_black;
+spr = -1;
+
+rad = 4;
+outlineColor = c_black;
+boxColor = c_white;
+padding = 8;
+
+LEFT = 0;
+RIGHT = 1;
+CENTER = 2;
+orientation = LEFT;
+order = 0;
+
+myAlpha = 0;
+fadeDuration = global.textAppearDelay;
+fadeSpeed = 1/fadeDuration;
+done = false;
+
+//these vars here are all set in the step event
+height = 0;
+x1 = 0;
+y1 = 0;
+x2 = 0;
+y2 = 0;
+width = 0;
+```
+
+#### Explanation of Variables
+Note that this explanation will only cover variables whose purpose may not be readily apparent.
+
+* **orientation** refers to the text alignment. Of course, this doesn't matter if the *text* variable is left blank.
+* **order** is the order in which this textbox will appear on the chat screen. It does not matter what it is set to here since it will be manually overriden by the calling *class_npc* object.
+* **text** is what the textbox will say. Once again, literally not important because it is set by the calling *class_npc* object.
+
 
 ## NPCs
+#### Create Event
+```
+///Initialize Variables
+STILL = 0;
+RANDOM_LOOK = 1;
+RANDOM_WALK = 2;
+FORWARD_BACK = 3;
+moveType = FORWARD_BACK;
+
+//random walk motion
+randomTime = random_range(2 * room_speed, 4 * room_speed);
+xTarg = x;
+yTarg = y;
+moveSpeed = 2;
+deadband = 2;
+maxDist = 64;
+alarm_set(0, -1);
+
+//forward back motion
+initX = x;
+finalX = x + 64;
+initY = y;
+finalY = y;
+FORWARD = 0;
+BACKWARD = 1;
+dir = FORWARD;
+
+//talking to the player
+triggerDist = 32;
+INIT_TRIGGER = 0;
+CURRENT_TRIGGER = 1;
+END_TRIGGER = 2;
+triggerStatus = END_TRIGGER;
+goFirst = false; //whether the player has to press 'e'
+
+//mode
+DEFAULT = 0;
+CONTROLLER = 1;
+mode = DEFAULT;
+
+//text location
+textFile = "npc_1_main_room.ini";
+directory = working_directory + "Text_Interactions\NPC_1\";
+textSource = directory + textFile;
+textSection = "default";
+sprSection = "default-sprites";
+responseSection = "default-responses";
+scriptSection = "default-scripts";
+argumentSection = "default-arguments";
+textCreated = false;
+responsesCreated = false;
+/* IMPORTANT NOTE
+* all responses' keys must come after 
+* the text keys in the INI file
+*/
+```
+
+#### Explanation of Variables
+Note that this explanation will only cover variables whose purpose may not be readily apparent.
+
+* **mode** is used to determine what the NPC's behavior should be. If it set to *DEFAULT*, then the NPC is in the overworld and can move around and interact with the player. If it set to *CONTROLLER*, then the NPC is currently in *rm_text_interaction* and it is creating the textboxes to be used.
+* **text location variables** all refer to the INI file where the text interactions are saved.
+* **textCreated** refers to whether or not the textboxes have been created. Only applicable if the current room is *rm_text_interaction*.
+* **responsesCreated** refers to whether or not the responses have been created. Only applicable if the current room is *rm_text_interaction*.
 
 ## Pause
 
