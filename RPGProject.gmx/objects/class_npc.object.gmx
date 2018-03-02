@@ -188,6 +188,10 @@ switch (triggerStatus) {
             draw = true;
             roomIndex = room;
         }
+        with (class_player) {
+            allowMovement = false;
+            allowInput = false;
+        }
         triggerStatus = CURRENT_TRIGGER;
         break;
     case CURRENT_TRIGGER:
