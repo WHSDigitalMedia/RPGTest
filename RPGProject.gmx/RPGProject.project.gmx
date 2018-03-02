@@ -54,13 +54,18 @@
       <sprite>sprites\spr_inv_button</sprite>
     </sprites>
     <sprites name="Player">
-      <sprite>sprites\spr_player</sprite>
+      <sprite>sprites\spr_player_idle</sprite>
+      <sprite>sprites\spr_player_down</sprite>
+      <sprite>sprites\spr_player_up</sprite>
+      <sprite>sprites\spr_player_left</sprite>
+      <sprite>sprites\spr_player_right</sprite>
     </sprites>
     <sprites name="Environment">
       <sprite>sprites\spr_wall</sprite>
     </sprites>
     <sprite>sprites\spr_npc</sprite>
     <sprite>sprites\spr_door</sprite>
+    <sprite>sprites\spr_menu_screen</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -91,6 +96,7 @@
       <object>objects\npc_2</object>
     </objects>
     <objects name="Controllers">
+      <object>objects\controller_main_menu</object>
       <object>objects\controller_map</object>
       <object>objects\controller_pause</object>
       <object>objects\controller_text</object>

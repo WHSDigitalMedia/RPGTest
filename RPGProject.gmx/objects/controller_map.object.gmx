@@ -80,7 +80,7 @@ alarm_set(0, alarmSpeed);
 for (var i = 0; i &lt; instance_number(class_door); i++) {
     var inst = instance_find(class_door, i);
     if (inst.roomTarg == controller_pause.roomIndex) {
-        draw_sprite(spr_player, 0, inst.x, inst.y);
+        draw_sprite(spr_player_idle, 0, inst.x, inst.y);
         i = instance_number(class_door);
     }
 }
