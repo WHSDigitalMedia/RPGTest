@@ -20,7 +20,7 @@ if (type == 0 || type == 2 || type == 4) {
     with (controller_combat) {
         targetSelected = other.id;
     }
-} else {
+} else { //multi target
     if (type == 1) {
         for (var i = 0; i < instance_number(class_npc); i++) {
             var inst = instance_find(class_npc, i);
@@ -54,6 +54,8 @@ if (type == 0 || type == 2 || type == 4) {
             }
         }
     }
+    //get the next person to go
+    controller_combat.instanceSelected = false;
 }
 
 ini_close();

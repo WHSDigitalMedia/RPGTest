@@ -47,7 +47,7 @@ stat[ATK] = 10;
 stat[DEF] = 10;
 stat[SPD] = 10;
 stat[ACC] = 10;
-stat[HP] = 10;
+stat[HP] = 35;
 
 statLevelCap = 50;
 maxHP = stat[HP];

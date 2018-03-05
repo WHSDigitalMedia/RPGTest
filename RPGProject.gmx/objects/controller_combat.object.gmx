@@ -118,6 +118,7 @@ ini_close();
             <kind>1</kind>
             <string>///Populating the Queues and create healthbars
 if (!queuesPopulated) {
+    show_debug_message('q');
     //get the speeds of everyone
     var playerTotalSpeed = 0; 
     var playerTotalCount = 0;
@@ -168,6 +169,7 @@ if (!queuesPopulated) {
     queuesPopulated = true;
     //and set this to false
     instanceSelected = false;
+    buttonsCreated = false; //this too
 }
 </string>
           </argument>
@@ -196,18 +198,17 @@ if (!instanceSelected) {
         if (ds_priority_empty(allyQueue)) {
             global.currentTurn = global.ENEMY_TURN;
         }
-    }
-    if (global.currentTurn == global.ENEMY_TURN) {
+    } else if (global.currentTurn == global.ENEMY_TURN) {
         if (ds_priority_empty(enemyQueue)) {
             global.currentTurn = global.PLAYER_TURN;
         }
     }
     
-    //if both the queues are empty
-    if (ds_priority_empty(enemyQueue) &amp;&amp; ds_priority_empty(allyQueue)) {
+    //refill the queues
+    if (ds_priority_empty(allyQueue) &amp;&amp; ds_priority_empty(enemyQueue)) {
         queuesPopulated = false;
-        numTurnsElapsed++;
-    } else {    
+        show_debug_message('reset');
+    } else {
         //sets the instance to go next
         if (global.currentTurn == global.PLAYER_TURN) {
             //makes sure that the instance exists
@@ -320,6 +321,11 @@ if (!healthBarsCreated) {
             <kind>1</kind>
             <string>///Create the player's moves
 if (!buttonsCreated &amp;&amp; global.currentTurn == global.PLAYER_TURN) {
+    //clear out all the old buttons
+    with (class_button) {
+        instance_destroy();
+    }
+    
     ini_open("move_data.ini");
     
     var move = 0;
@@ -387,6 +393,10 @@ if (targetSelected &gt; -1) {
             targ.stat[affect] += amt;
         }
         ini_close();
+        //get the next person to go
+        instanceSelected = false;
+        show_debug_message('l');
+        
         targetSelected = -1;
     } 
 }
