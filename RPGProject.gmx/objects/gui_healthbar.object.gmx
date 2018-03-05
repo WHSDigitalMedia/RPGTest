@@ -25,35 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Initialize Variables
-depth = -9999;
-
-text = "";
-textColor = c_black;
-textAlpha = 1;
-textFont = fnt_arial16;
-textXPos = 0;
-textYPos = 0;
-
-LEFT = 0;
-CENTER = 1;
-RIGHT = 2;
-textAlign = CENTER;
-
-INIT_OVER = 0;
-END_OVER = 1;
-INIT_EXIT = 2;
-END_EXIT = 3;
-mouseStatus = END_EXIT;
-overAction = noone;
-leaveAction = noone;
-clickAction = noone;
-altClickAction = noone;
-
-SINGLE_USE = 0;
-MULTI_USE = 1;
-mode = MULTI_USE;
-done = false;
+            <string>owner = noone;
+pColor = make_color_rgb(0, 255, 29);
+eColor = make_color_rgb(255, 46, 0);
+color = pColor;
+width = 64;
+barWidth = width;
+height = 16;
+dist = 8;
 </string>
           </argument>
         </arguments>
@@ -76,54 +55,14 @@ done = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Mouse actions
-if (sprite_index != -1 &amp;&amp; !done) {
-    var mouseIsOver = point_in_rectangle(mouse_x, mouse_y, x - sprite_width/2, y - sprite_height/2, x + sprite_width/2, y + sprite_height/2);
-    //checks to see if the mouse is over
-    if (mouseIsOver) {
-        //execute the over action only once
-        if (mouseStatus != END_OVER) {
-            mouseStatus = INIT_OVER;
-        }
-        
-        //execute click action if clicked
-        if (mouse_check_button_pressed(mb_left)) {
-            if (script_exists(clickAction)) {
-                script_execute(clickAction);
-                if (mode == SINGLE_USE) {
-                    done = true;
-                }
-            }
-        } else if (mouse_check_button_pressed(mb_right)) {
-            if (script_exists(altClickAction)) {
-                script_execute(altClickAction);
-                if (mode == SINGLE_USE) {
-                    done = true;
-                }
-            }
-        }
-    }
+            <string>if instance_exists(owner) {
+    x = owner.x - width/2;
+    y = owner.y + owner.sprite_height/2 + dist;
     
-    //checks to see if the mouse just stopped overlapping the button
-    if (mouseStatus == END_OVER &amp;&amp; !mouseIsOver) {
-        mouseStatus = INIT_EXIT;
-    }
+    barWidth = (owner.stat[owner.HP] * width)/owner.maxHP;
     
-    //does the actual running of the scripts
-    switch (mouseStatus) {
-        case INIT_OVER: 
-            if (script_exists(overAction)) {
-                script_execute(overAction);
-            }
-            mouseStatus = END_OVER;
-            break;
-        case INIT_EXIT:
-            if (script_exists(leaveAction)) {
-                script_execute(leaveAction);
-            }
-            mouseStatus = END_EXIT;
-            break;
-        default: break; //do nothing after the initial begin/end overlap
+    if (owner.stat[owner.HP] &lt;= 0) {
+        instance_destroy();
     }
 }
 </string>
@@ -131,7 +70,7 @@ if (sprite_index != -1 &amp;&amp; !done) {
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -148,23 +87,10 @@ if (sprite_index != -1 &amp;&amp; !done) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Draw the text
-draw_self();
-
-if (textAlign == LEFT) {
-    draw_set_halign(fa_left);
-} else if (textAlign == CENTER) {
-    draw_set_halign(fa_center);
-} else if (textAlign == RIGHT) {
-    draw_set_halign(fa_right);
+            <string>if instance_exists(owner) {
+    draw_roundrect_colour(x, y, x + width, y + height, c_gray, c_gray, true);
+    draw_roundrect_colour(x, y, x + barWidth, y + height, color, color, false); 
 }
-draw_set_valign(fa_middle);
-
-draw_set_font(textFont);
-draw_text_colour(x + textXPos, y + textYPos, text, textColor, textColor, textColor, textColor, textAlpha);
-
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
 </string>
           </argument>
         </arguments>

@@ -205,7 +205,9 @@ if (pos == instance_number(gui_textbox) &amp;&amp; instance_exists(class_npc)) {
                     script_execute_ext(script, arg[1], arg[2], arg[3], arg[4], arg[5]);
                     i = 9;
                     ini_close();
-                    end_conversation();
+                    if (script != init_combat) {
+                        end_conversation();
+                    }
                 }
             }
         }

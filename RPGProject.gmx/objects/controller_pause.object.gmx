@@ -31,6 +31,7 @@ global.STANDARD_PAUSE = 1;
 global.TEXT_PAUSE = 2;
 global.MAP_PAUSE = 3;
 global.INVENTORY_PAUSE = 4;
+global.COMBAT_PAUSE = 5;
 global.pause = global.UNPAUSE;
 
 intensity = 0.7; //the blur intensity

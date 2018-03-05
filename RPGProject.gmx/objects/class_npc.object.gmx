@@ -61,12 +61,37 @@ goFirst = false; //whether the player has to press 'e'
 //mode
 DEFAULT = 0;
 CONTROLLER = 1;
+COMBAT = 2;
 mode = DEFAULT;
+
+//combat
+ALLY = 0;
+ENEMY = 1;
+alignment = ENEMY;
+//stats
+ATK = 0;
+DEF = 1;
+SPD = 2;
+ACC = 3;
+HP = 4;
+stat[ATK] = 10;
+stat[DEF] = 10;
+stat[SPD] = 12;
+stat[ACC] = 10;
+stat[HP] = 10;
+maxHP = stat[HP];
+//move types
+SINGLE_ATTACK = 0;
+ALL_ATTACK = 1;
+SINGLE_HEAL = 2;
+ALL_HEAL = 3;
+SINGLE_BUFF = 4;
+ALL_BUFF = 5;
 
 //text location
 textFile = "npc_1_main_room.ini";
-directory = working_directory + "Text_Interactions\NPC_1\";
-textSource = directory + textFile;
+textDirectory = working_directory + "Text_Interactions\NPC_1\";
+textSource = textDirectory + textFile;
 textSection = "default";
 sprSection = "default-sprites";
 responseSection = "default-responses";
@@ -78,6 +103,11 @@ responsesCreated = false;
 * all responses' keys must come after 
 * the text keys in the INI file
 */
+
+//moves location
+moveFile = "npc_3.ini";
+moveDirectory = working_directory + "Combat_Interactions\";
+moveSource = moveDirectory + moveFile;
 </string>
           </argument>
         </arguments>
@@ -422,6 +452,232 @@ ini_close();
       </action>
       <action>
         <libid>1</libid>
+        <id>612</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>-1</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_if_variable</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>mode</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>COMBAT</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>422</id>
+        <kind>1</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Using a move
+if (global.currentInstance == self) {
+    if (global.currentTurn == global.ENEMY_TURN) {
+        ini_open(moveSource);
+        
+        var randomMove = "";
+        //pick a random move to use
+        do {
+            randomMove = string(choose(0, 1, 2, 3));
+        } until (ini_section_exists(randomMove));
+        
+        var type = ini_read_real(randomMove, "type", 0);
+        switch (type) {
+            case 0:
+                //create list of targets to choose from
+                var _tempList = ds_list_create();
+                for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                    var inst = instance_find(class_npc, i);
+                    if (inst.alignment = ALLY) {
+                        ds_list_add(_tempList, inst);
+                    }
+                }    
+                ds_list_add(_tempList, instance_find(class_player, 0));
+                var randPos = irandom(ds_list_size(_tempList));
+                
+                //deal damage
+                with (ds_list_find_value(_tempList, randPos)) {
+                    stat[HP] -= ini_read_real(randomMove, "amount", 0);
+                }
+                //clean up the list
+                ds_list_destroy(_tempList);
+                break;
+            case 1:
+                //deal damage to player and opposing objects
+                for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                    var inst = instance_find(class_npc, i);
+                    if (inst.alignment == ALLY) {
+                        with (inst) {
+                            stat[HP] -= ini_read_real(randomMove, "amount", 0);
+                        }
+                    }
+                }
+                
+                with (instance_find(class_player, 0)) {
+                    stat[HP] -= ini_read_real(randomMove, "amount", 0);
+                }
+                break;
+            case 2:
+                //find target to heal
+                var _tempList = ds_list_create();
+                for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                    var inst = instance_find(class_npc, i);
+                    if (inst.alignment == ENEMY) {
+                        ds_list_add(_tempList, inst);
+                    }
+                }
+                
+                var randomPos = irandom(ds_list_size(_tempList));
+                with (ds_list_find_value(_tempList, randomPos)) {
+                    stat[HP] += ini_read_real(randomMove, "amount", 0);
+                }
+                break;
+            case 3:
+                //heal all allied objects
+                for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                    var inst = instance_find(class_npc, i);
+                    if (inst.alignment == ENEMY) {
+                        with (inst) {
+                            stat[HP] += ini_read_real(randomMove, "amount", 0);
+                        }
+                    }
+                }
+                break;
+            case 4:
+                //buff single target
+                var amt = ini_read_real(randomMove, "amount", 0);
+                var targ = ENEMY;
+                if (amt &gt; 0) {
+                    targ = ENEMY;
+                } else {
+                    targ = ALLY;
+                }
+                var _tempList = ds_list_create();
+                for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                    var inst = instance_find(class_npc, i);
+                    if (inst.alignment == targ) {
+                        ds_list_add(_tempList, inst);
+                    }
+                }
+                if (targ = ALLY) {
+                    ds_list_add(_tempList, instance_find(class_player, 0));
+                }
+                var randomPos = irandom(ds_list_size(_tempList));
+                with (ds_list_find_value(_tempList, randomPos)) {
+                    stat[ini_read_real(randomMove, "stat", 0)] += amt;
+                }
+                break;
+            case 5:
+                //buff multiple targets
+                var amt = ini_read_real(randomMove, "amount", 0);
+                var targ = ENEMY;
+                if (amt &gt; 0) {
+                    targ = ENEMY;
+                } else {
+                    targ = ALLY;
+                    with (class_player) {
+                        stat[ini_read_real(randomMove, "stat", 0)] += amt;
+                    }
+                }
+                for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                    var inst = instance_find(class_npc, i);
+                    if (inst.alignment == targ) {
+                        with (inst) {
+                            stat[ini_read_real(randomMove, "stat", 0)] += amt;
+                        }
+                    }
+                }
+                break;
+            default: break;
+        }
+        
+        ini_close();
+        //get the next enemy to go
+        controller_combat.instanceSelected = false; 
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///other combat stuffs
+if (stat[HP] &lt;= 0) {
+    instance_destroy();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>424</id>
+        <kind>2</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -440,6 +696,8 @@ ini_close();
 if (room == rm_text_interaction) {
     mode = CONTROLLER;
     visible = false;
+} else if (room == rm_combat_interaction) {
+    mode = COMBAT;
 } else {
     mode = DEFAULT;
     visible = true;

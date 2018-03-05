@@ -62,3 +62,12 @@ with (controller_pause) {
         room_goto(rm_map_menu);
     }
 }
+#define init_combat
+///init_combat()
+with (controller_pause) {
+    global.pause = global.COMBAT_PAUSE;
+    with (class_npc) {
+        visible = true;
+    }
+    room_goto(rm_combat_interaction);
+}
