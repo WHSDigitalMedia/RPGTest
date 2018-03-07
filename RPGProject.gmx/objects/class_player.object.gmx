@@ -43,11 +43,11 @@ SPD = 2;
 ACC = 3;
 HP = 4;
 
-stat[ATK] = 10;
+stat[ATK] = 1000000;
 stat[DEF] = 10;
 stat[SPD] = 10;
 stat[ACC] = 10;
-stat[HP] = 35;
+stat[HP] = 100;
 
 maxStat[ATK] = 20;
 maxStat[DEF] = 20;

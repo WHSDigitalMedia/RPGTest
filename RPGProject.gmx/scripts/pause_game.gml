@@ -64,10 +64,15 @@ with (controller_pause) {
 }
 #define init_combat
 ///init_combat()
+
 with (controller_pause) {
     global.pause = global.COMBAT_PAUSE;
     with (class_npc) {
         visible = true;
     }
+    var inst = instance_find(class_npc, 0);
+    savedNPCX = inst.x;
+    savedNPCY = inst.y
+    createNPC = inst.object_index;
     room_goto(rm_combat_interaction);
 }

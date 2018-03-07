@@ -39,6 +39,10 @@ steps = 3; //also affects intensity but it's better to change the above value
 draw = false; //has the sprite been created
 roomIndex = rm_main_room; //room to return to
 spr = -1; //the sprite the surface will draw
+
+savedNPCX = 0;
+savedNPCY = 0;
+createNPC = -1;
 </string>
           </argument>
         </arguments>
@@ -100,6 +104,31 @@ if (global.pause != global.UNPAUSE &amp;&amp; (room == rm_pause_menu || room == 
         visible = false;
     }
 } //what to do when unpausing is in the toggle pause event
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///bring back NPC from combat
+if (createNPC &amp;&amp; room != rm_combat_interaction) {
+    instance_create(savedNPCX, savedNPCY, createNPC);
+    createNPC = -1;
+}
 </string>
           </argument>
         </arguments>

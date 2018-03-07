@@ -473,8 +473,7 @@ if (!buttonsCreated) {
         text = "Return to items"
         overAction = set_text_color_white;
         leaveAction = set_text_color_black;
-        clickAction = inventory_consume_item;
-        altClickAction = toggle_inv_desc;
+        clickAction = toggle_inv_desc;
         textAlign = LEFT;
         textXPos = -sprite_width/2 + 4;
         mode = SINGLE_USE;     
