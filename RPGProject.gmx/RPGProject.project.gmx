@@ -120,9 +120,13 @@
     </scripts>
     <scripts name="Inventory">
       <script>scripts\inventory_add.gml</script>
+      <script>scripts\inventory_consume_item.gml</script>
       <script>scripts\inventory_equip.gml</script>
     </scripts>
     <script>scripts\use_move.gml</script>
+    <script>scripts\display_desc.gml</script>
+    <script>scripts\display_inv.gml</script>
+    <script>scripts\toggle_inv_desc.gml</script>
     <script>scripts\pick_target.gml</script>
     <script>scripts\mouse_check_over.gml</script>
     <script>scripts\script_execute_ext.gml</script>

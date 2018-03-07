@@ -79,7 +79,11 @@ stat[DEF] = 10;
 stat[SPD] = 12;
 stat[ACC] = 10;
 stat[HP] = 10;
-maxHP = stat[HP];
+maxStat[ATK] = 20;
+maxStat[DEF] = 20;
+maxStat[SPD] = 20;
+maxStat[ACC] = 20;
+maxStat[HP] = stat[HP];
 //move types
 SINGLE_ATTACK = 0;
 ALL_ATTACK = 1;
@@ -521,12 +525,10 @@ if (global.currentInstance == self &amp;&amp; global.currentTurn == global.ENEMY
                 var inst = instance_find(class_npc, i);
                 if (inst.alignment = ALLY) {
                     ds_list_add(_tempList, inst);
-                    show_debug_message('l');
                 }
             }
             ds_list_add(_tempList, instance_find(class_player, 0));
             var randPos = irandom(ds_list_size(_tempList) - 1);
-            show_debug_message(ds_list_find_value(_tempList, randPos));
             
             //deal damage
             with (ds_list_find_value(_tempList, randPos)) {
@@ -649,6 +651,12 @@ if (global.currentInstance == self &amp;&amp; global.currentTurn == global.ENEMY
           <argument>
             <kind>1</kind>
             <string>///other combat stuffs
+
+//clamping of stat values
+for (var i = 0; i &lt; array_length_1d(stat); i++) {
+    stat[i] = clamp(stat[i], 0, maxStat[i]);
+}
+
 if (stat[HP] &lt;= 0) {
     instance_destroy();
 }

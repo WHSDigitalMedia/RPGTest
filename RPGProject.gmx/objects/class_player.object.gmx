@@ -49,8 +49,11 @@ stat[SPD] = 10;
 stat[ACC] = 10;
 stat[HP] = 35;
 
-statLevelCap = 50;
-maxHP = stat[HP];
+maxStat[ATK] = 20;
+maxStat[DEF] = 20;
+maxStat[SPD] = 20;
+maxStat[ACC] = 20;
+maxStat[HP] = stat[HP];
 image_index = 0;
 image_speed = 0;
 </string>
@@ -157,7 +160,7 @@ if (keyboard_check_pressed(ord("R"))) game_restart();
             <string>///Combat
 //clamping of stat values
 for (var i = 0; i &lt; array_length_1d(stat); i++) {
-    stat[i] = clamp(stat[i], 0, statLevelCap);
+    stat[i] = clamp(stat[i], 0, maxStat[i]);
 }
 </string>
           </argument>

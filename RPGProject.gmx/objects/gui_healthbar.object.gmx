@@ -59,7 +59,7 @@ dist = 8;
     x = owner.x - width/2;
     y = owner.y + owner.sprite_height/2 + dist;
     
-    barWidth = (owner.stat[owner.HP] * width)/owner.maxHP;
+    barWidth = (owner.stat[owner.HP] * width)/owner.maxStat[owner.HP];
     
     if (owner.stat[owner.HP] &lt;= 0) {
         instance_destroy();

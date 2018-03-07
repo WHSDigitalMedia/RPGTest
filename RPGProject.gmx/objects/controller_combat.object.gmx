@@ -44,13 +44,12 @@ global.currentInstance = -1;
 //what displays at the bottom
 MOVES = 0;
 MOVES_DESC = 1;
-INVENTORY = 2;
-INVENTORY_DESC = 3;
+INVENTORY = 2; //see controller_inventory for actual display code
 mode = MOVES;
 
 buttonsCreated = false;
 healthBarsCreated = false;
-moveSelected = -1; //is set to the ID of the calling button instance
+moveSelected = ""; //is set to the name of the calling button instance
 </string>
           </argument>
         </arguments>
@@ -94,6 +93,39 @@ do {
 } until (!ini_key_exists("Enemies", string(pos)));
 
 ini_close();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Create inventory toggle button
+with (instance_create(room_width * 0.8, room_height * 0.8, class_button)) {
+    sprite_index = spr_inv_button;
+    text = "Show Inventory";
+    overAction = set_text_color_white;
+    leaveAction = set_text_color_black;
+    clickAction = display_inv;
+}
+
+//set the mode of controller_inventory
+with (controller_inventory) {
+    mode = ITEMS;
+}
 </string>
           </argument>
         </arguments>
@@ -321,7 +353,9 @@ if (!healthBarsCreated) {
 if (!buttonsCreated &amp;&amp; global.currentTurn == global.PLAYER_TURN) {
     //clear out all the old buttons
     with (class_button) {
-        instance_destroy();
+        if (clickAction != display_inv) {
+            instance_destroy();
+        }
     }
     
     ini_open("move_data.ini");
@@ -334,6 +368,7 @@ if (!buttonsCreated &amp;&amp; global.currentTurn == global.PLAYER_TURN) {
             overAction = set_text_color_white;
             leaveAction = set_text_color_black;
             clickAction = use_move;
+            altClickAction = display_desc;
             textAlign = LEFT;
             textXPos = -sprite_width/2 + 4;
             mode = SINGLE_USE;
@@ -366,10 +401,9 @@ if (!buttonsCreated &amp;&amp; global.currentTurn == global.PLAYER_TURN) {
           <argument>
             <kind>1</kind>
             <string>///Picking a target
-if (moveSelected &gt; -1) {
+if (moveSelected != "") {
     var targ = pick_target();
     if (instance_exists(targ)) {
-        show_debug_message(targ);
         ini_open("move_data.ini");
         var move = 0;
         var name = "";
@@ -382,7 +416,7 @@ if (moveSelected &gt; -1) {
             amt = ini_read_real(string(move), "amount", 0);
             affect = ini_read_real(string(move), "stat", 0);
             move++;
-        } until (name == moveSelected.text);
+        } until (name == moveSelected);
         if (type == 0) {
             targ.stat[targ.HP] -= amt;
         } else if (type == 2) {
@@ -395,9 +429,183 @@ if (moveSelected &gt; -1) {
         //get the next person to go
         instanceSelected = false;   
         //reset the selected move     
-        moveSelected = -1;
+        moveSelected = "";
     } 
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>424</id>
+        <kind>2</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>612</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>-1</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_if_variable</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>mode</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>MOVES_DESC</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>422</id>
+        <kind>1</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Create a button to go back
+if (!buttonsCreated) {
+    //clear out all the old buttons
+    with (class_button) {
+        if (clickAction != display_inv) {
+            instance_destroy();
+        }
+    }
+
+    with (instance_create(room_width/2, room_height/2, class_button)) {
+        sprite_index = spr_inv_button;
+        text = "Return to moves"
+        overAction = set_text_color_white;
+        leaveAction = set_text_color_black;
+        clickAction = display_desc;
+        textAlign = LEFT;
+        textXPos = -sprite_width/2 + 4;
+        mode = SINGLE_USE;     
+    }
+    buttonsCreated = true;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>424</id>
+        <kind>2</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>612</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>-1</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_if_variable</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>mode</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>INVENTORY</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>422</id>
+        <kind>1</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///actual buttons in controller_inventory
 </string>
           </argument>
         </arguments>
@@ -506,6 +714,25 @@ if (ds_exists(enemyQueue, ds_type_priority)) {
           <argument>
             <kind>1</kind>
             <string>///Show the move description
+if (moveSelected != "") {
+    ini_open("move_data.ini");
+    
+    //loop through the moves to find the one we want
+    var pos = 0;
+    var desc = "";
+    do {
+        //copy the description if we found the move
+        if (ini_read_string(string(pos), "name", "") == moveSelected) {
+            desc = ini_read_string(string(pos), "desc", "");
+        }
+        pos++;
+    //break once pos exceeds the number of moves
+    } until (!ini_section_exists(string(pos)));
+
+    draw_text(room_width/2, room_height * 0.8, desc);
+    
+    ini_close();
+}
 </string>
           </argument>
         </arguments>

@@ -1,7 +1,7 @@
 #define inventory_equip
 ///inventory_equip()
 //only applies to equippable items
-if (controller_inventory.viewMode == controller_inventory.EQUIPPABLE) {
+if (controller_inventory.mode == controller_inventory.EQUIPPABLE) {
     ini_open("item_data.ini");
     var _tempList = ds_list_create(); //see line 33's code block
     var canEquip = true; //can we even equip this item
@@ -104,7 +104,7 @@ if (controller_inventory.viewMode == controller_inventory.EQUIPPABLE) {
 #define inventory_unequip
 ///inventory_unequip()
 //only applies to equippable items
-if (controller_inventory.viewMode == controller_inventory.EQUIPPABLE) {
+if (controller_inventory.mode == controller_inventory.EQUIPPABLE) {
     //make sure we have enough room in the inventory to put this back
     if (ds_list_size(controller_inventory.equippableList) < controller_inventory.equippableMax) {
         ds_list_add(controller_inventory.equippableList, text);
