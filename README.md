@@ -442,5 +442,24 @@ mode = SINGLE_USE;
 The function *event_inherited()* copies the code over from the same event of the parent object. So in this case, *main_menu_start_button* inherits all of the default variables that were initialized in the Create Event of *class_button*. The other variables set after *event_inherited()* is called act as manual overrides specific to the "child" object. If there is no code event, the "child" object inherits the code of the "parent" object by default. For instance, *main_menu_start_button* has no Step Event code, it instead automatically inherits the Step Event of *class_button*.
 
 
+### 5. Important Numbers
+The following are important numbers to remember for the INI files.
+#### Character stats
+```
+ATK = 0;
+DEF = 1;
+SPD = 2;
+ACC = 3;
+HP = 4;
+```
+#### Move types
+```
+SINGLE_ATTACK = 0;
+ALL_ATTACK = 1;
+SINGLE_HEAL = 2;
+ALL_HEAL = 3;
+SINGLE_BUFF = 4;
+ALL_BUFF = 5;
+```
 
 

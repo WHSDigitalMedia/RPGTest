@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>class_nonGUI</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -402,9 +402,6 @@ if (!textCreated) {
             //update the position value to loop through all of these
             pos++;
         } until (!ini_key_exists(textSection, string(pos))); //done when no more text to read
-    } else {
-        show_debug_message("Section does not exist!");
-        textCreated = true;
     }
     
     textCreated = true;
@@ -423,9 +420,6 @@ if (!responsesCreated) {
             
             pos++;
         } until (!ini_key_exists(responseSection, string(pos))); //done when no more buttons to read
-    } else {
-        show_debug_message("Section does not exist!");
-        responsesCreated = true;
     }
     
     responsesCreated = true;
@@ -509,130 +503,130 @@ ini_close();
           <argument>
             <kind>1</kind>
             <string>///Using a move
-if (global.currentInstance == self) {
-    if (global.currentTurn == global.ENEMY_TURN) {
-        ini_open(moveSource);
-        
-        var randomMove = "";
-        //pick a random move to use
-        do {
-            randomMove = string(choose(0, 1, 2, 3));
-        } until (ini_section_exists(randomMove));
-        
-        var type = ini_read_real(randomMove, "type", 0);
-        switch (type) {
-            case 0:
-                //create list of targets to choose from
-                var _tempList = ds_list_create();
-                for (var i = 0; i &lt; instance_number(class_npc); i++) {
-                    var inst = instance_find(class_npc, i);
-                    if (inst.alignment = ALLY) {
-                        ds_list_add(_tempList, inst);
+if (global.currentInstance == self &amp;&amp; global.currentTurn == global.ENEMY_TURN) {
+    ini_open(moveSource);
+    
+    var randomMove = "";
+    //pick a random move to use
+    do {
+        randomMove = string(choose(0, 1, 2, 3));
+    } until (ini_section_exists(randomMove));
+    
+    var type = ini_read_real(randomMove, "type", 0);
+    switch (type) {
+        case 0:
+            //create list of targets to choose from
+            var _tempList = ds_list_create();
+            for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                var inst = instance_find(class_npc, i);
+                if (inst.alignment = ALLY) {
+                    ds_list_add(_tempList, inst);
+                    show_debug_message('l');
+                }
+            }
+            ds_list_add(_tempList, instance_find(class_player, 0));
+            var randPos = irandom(ds_list_size(_tempList) - 1);
+            show_debug_message(ds_list_find_value(_tempList, randPos));
+            
+            //deal damage
+            with (ds_list_find_value(_tempList, randPos)) {
+                stat[HP] -= ini_read_real(randomMove, "amount", 0);
+            }
+            //clean up the list
+            ds_list_destroy(_tempList);
+            break;
+        case 1:
+            //deal damage to player and opposing objects
+            for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                var inst = instance_find(class_npc, i);
+                if (inst.alignment == ALLY) {
+                    with (inst) {
+                        stat[HP] -= ini_read_real(randomMove, "amount", 0);
                     }
-                }    
+                }
+            }
+            
+            with (instance_find(class_player, 0)) {
+                stat[HP] -= ini_read_real(randomMove, "amount", 0);
+            }
+            break;
+        case 2:
+            //find target to heal
+            var _tempList = ds_list_create();
+            for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                var inst = instance_find(class_npc, i);
+                if (inst.alignment == ENEMY) {
+                    ds_list_add(_tempList, inst);
+                }
+            }
+            
+            var randomPos = irandom(ds_list_size(_tempList) - 1);
+            with (ds_list_find_value(_tempList, randomPos)) {
+                stat[HP] += ini_read_real(randomMove, "amount", 0);
+            }
+            break;
+        case 3:
+            //heal all allied objects
+            for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                var inst = instance_find(class_npc, i);
+                if (inst.alignment == ENEMY) {
+                    with (inst) {
+                        stat[HP] += ini_read_real(randomMove, "amount", 0);
+                    }
+                }
+            }
+            break;
+        case 4:
+            //buff single target
+            var amt = ini_read_real(randomMove, "amount", 0);
+            var targ = ENEMY;
+            if (amt &gt; 0) {
+                targ = ENEMY;
+            } else {
+                targ = ALLY;
+            }
+            var _tempList = ds_list_create();
+            for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                var inst = instance_find(class_npc, i);
+                if (inst.alignment == targ) {
+                    ds_list_add(_tempList, inst);
+                }
+            }
+            if (targ = ALLY) {
                 ds_list_add(_tempList, instance_find(class_player, 0));
-                var randPos = irandom(ds_list_size(_tempList));
-                
-                //deal damage
-                with (ds_list_find_value(_tempList, randPos)) {
-                    stat[HP] -= ini_read_real(randomMove, "amount", 0);
-                }
-                //clean up the list
-                ds_list_destroy(_tempList);
-                break;
-            case 1:
-                //deal damage to player and opposing objects
-                for (var i = 0; i &lt; instance_number(class_npc); i++) {
-                    var inst = instance_find(class_npc, i);
-                    if (inst.alignment == ALLY) {
-                        with (inst) {
-                            stat[HP] -= ini_read_real(randomMove, "amount", 0);
-                        }
-                    }
-                }
-                
-                with (instance_find(class_player, 0)) {
-                    stat[HP] -= ini_read_real(randomMove, "amount", 0);
-                }
-                break;
-            case 2:
-                //find target to heal
-                var _tempList = ds_list_create();
-                for (var i = 0; i &lt; instance_number(class_npc); i++) {
-                    var inst = instance_find(class_npc, i);
-                    if (inst.alignment == ENEMY) {
-                        ds_list_add(_tempList, inst);
-                    }
-                }
-                
-                var randomPos = irandom(ds_list_size(_tempList));
-                with (ds_list_find_value(_tempList, randomPos)) {
-                    stat[HP] += ini_read_real(randomMove, "amount", 0);
-                }
-                break;
-            case 3:
-                //heal all allied objects
-                for (var i = 0; i &lt; instance_number(class_npc); i++) {
-                    var inst = instance_find(class_npc, i);
-                    if (inst.alignment == ENEMY) {
-                        with (inst) {
-                            stat[HP] += ini_read_real(randomMove, "amount", 0);
-                        }
-                    }
-                }
-                break;
-            case 4:
-                //buff single target
-                var amt = ini_read_real(randomMove, "amount", 0);
-                var targ = ENEMY;
-                if (amt &gt; 0) {
-                    targ = ENEMY;
-                } else {
-                    targ = ALLY;
-                }
-                var _tempList = ds_list_create();
-                for (var i = 0; i &lt; instance_number(class_npc); i++) {
-                    var inst = instance_find(class_npc, i);
-                    if (inst.alignment == targ) {
-                        ds_list_add(_tempList, inst);
-                    }
-                }
-                if (targ = ALLY) {
-                    ds_list_add(_tempList, instance_find(class_player, 0));
-                }
-                var randomPos = irandom(ds_list_size(_tempList));
-                with (ds_list_find_value(_tempList, randomPos)) {
+            }
+            var randomPos = irandom(ds_list_size(_tempList) - 1);
+            with (ds_list_find_value(_tempList, randomPos)) {
+                stat[ini_read_real(randomMove, "stat", 0)] += amt;
+            }
+            break;
+        case 5:
+            //buff multiple targets
+            var amt = ini_read_real(randomMove, "amount", 0);
+            var targ = ENEMY;
+            if (amt &gt; 0) {
+                targ = ENEMY;
+            } else {
+                targ = ALLY;
+                with (class_player) {
                     stat[ini_read_real(randomMove, "stat", 0)] += amt;
                 }
-                break;
-            case 5:
-                //buff multiple targets
-                var amt = ini_read_real(randomMove, "amount", 0);
-                var targ = ENEMY;
-                if (amt &gt; 0) {
-                    targ = ENEMY;
-                } else {
-                    targ = ALLY;
-                    with (class_player) {
+            }
+            for (var i = 0; i &lt; instance_number(class_npc); i++) {
+                var inst = instance_find(class_npc, i);
+                if (inst.alignment == targ) {
+                    with (inst) {
                         stat[ini_read_real(randomMove, "stat", 0)] += amt;
                     }
                 }
-                for (var i = 0; i &lt; instance_number(class_npc); i++) {
-                    var inst = instance_find(class_npc, i);
-                    if (inst.alignment == targ) {
-                        with (inst) {
-                            stat[ini_read_real(randomMove, "stat", 0)] += amt;
-                        }
-                    }
-                }
-                break;
-            default: break;
-        }
-        
-        ini_close();
-        //get the next enemy to go
-        controller_combat.instanceSelected = false; 
+            }
+            break;
+        default: break;
     }
+    
+    ini_close();
+    //get the next enemy to go
+    controller_combat.instanceSelected = false; 
 }
 </string>
           </argument>

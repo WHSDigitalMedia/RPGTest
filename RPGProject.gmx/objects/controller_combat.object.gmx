@@ -50,7 +50,7 @@ mode = MOVES;
 
 buttonsCreated = false;
 healthBarsCreated = false;
-targetSelected = -1; //is set to the ID of the calling button instance
+moveSelected = -1; //is set to the ID of the calling button instance
 </string>
           </argument>
         </arguments>
@@ -118,7 +118,6 @@ ini_close();
             <kind>1</kind>
             <string>///Populating the Queues and create healthbars
 if (!queuesPopulated) {
-    show_debug_message('q');
     //get the speeds of everyone
     var playerTotalSpeed = 0; 
     var playerTotalCount = 0;
@@ -207,7 +206,6 @@ if (!instanceSelected) {
     //refill the queues
     if (ds_priority_empty(allyQueue) &amp;&amp; ds_priority_empty(enemyQueue)) {
         queuesPopulated = false;
-        show_debug_message('reset');
     } else {
         //sets the instance to go next
         if (global.currentTurn == global.PLAYER_TURN) {
@@ -330,7 +328,7 @@ if (!buttonsCreated &amp;&amp; global.currentTurn == global.PLAYER_TURN) {
     
     var move = 0;
     do {
-        with (instance_create(room_width/2, room_height * 0.8, class_button)) {
+        with (instance_create(room_width/2, room_height * 0.8 + (move * 64), class_button)) {
             sprite_index = spr_inv_button;
             text = ini_read_string(string(move), "name", "");
             overAction = set_text_color_white;
@@ -368,10 +366,10 @@ if (!buttonsCreated &amp;&amp; global.currentTurn == global.PLAYER_TURN) {
           <argument>
             <kind>1</kind>
             <string>///Picking a target
-var targ = noone;
-if (targetSelected &gt; -1) {
-    targ = pick_target();
+if (moveSelected &gt; -1) {
+    var targ = pick_target();
     if (instance_exists(targ)) {
+        show_debug_message(targ);
         ini_open("move_data.ini");
         var move = 0;
         var name = "";
@@ -384,7 +382,7 @@ if (targetSelected &gt; -1) {
             amt = ini_read_real(string(move), "amount", 0);
             affect = ini_read_real(string(move), "stat", 0);
             move++;
-        } until (name == targetSelected.text);
+        } until (name == moveSelected.text);
         if (type == 0) {
             targ.stat[targ.HP] -= amt;
         } else if (type == 2) {
@@ -393,11 +391,11 @@ if (targetSelected &gt; -1) {
             targ.stat[affect] += amt;
         }
         ini_close();
-        //get the next person to go
-        instanceSelected = false;
-        show_debug_message('l');
         
-        targetSelected = -1;
+        //get the next person to go
+        instanceSelected = false;   
+        //reset the selected move     
+        moveSelected = -1;
     } 
 }
 </string>

@@ -18,7 +18,7 @@ do {
 //pick a target
 if (type == 0 || type == 2 || type == 4) {
     with (controller_combat) {
-        targetSelected = other.id;
+        moveSelected = other.id;
     }
 } else { //multi target
     if (type == 1) {

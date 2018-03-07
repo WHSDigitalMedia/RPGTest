@@ -131,6 +131,7 @@
     <font>fonts\fnt_arial16</font>
   </fonts>
   <objects name="objects">
+    <object>objects\class_nonGUI</object>
     <object>objects\class_player</object>
     <objects name="NPCs">
       <object>objects\class_npc</object>
