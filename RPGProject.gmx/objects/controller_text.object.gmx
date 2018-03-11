@@ -185,19 +185,20 @@ if (mouse_wheel_up() &amp;&amp; y &lt; finalY) {
             <string>///Choosing a response
 //only allowed after all the textboxes have spawned in
 if (pos == instance_number(gui_textbox) &amp;&amp; instance_exists(class_npc)) {
-    ini_open(class_npc.textSource);
-    if (ini_section_exists(class_npc.scriptSection)) {
+    var inst = instance_find(class_npc, 0);
+    ini_open(inst.textSource);
+    if (ini_section_exists(inst.scriptSection)) {
         for (var i = 1; i &lt; 9; i++) { //number of possible inputs
             //check for inputs
             if (keyboard_check_pressed(ord(string(i)))) {
                 //get corresponding script
-                var script = asset_get_index(ini_read_string(class_npc.scriptSection, string(i), "noone"));
+                var script = asset_get_index(ini_read_string(inst.scriptSection, string(i), "noone"));
                 //get corresponding arguments
                 var arg;
                 //set default values for arg for script_execute_ext
                 arg[1] = ""; arg[2] = ""; arg[3] = ""; arg[4] = ""; arg[5] = "";
                 for (var n = 1; n &lt; array_length_1d(arg); n++) {
-                    arg[n] = ini_read_string(class_npc.argumentSection, string(i) + "_" + string(n), "");
+                    arg[n] = ini_read_string(inst.argumentSection, string(i) + "_" + string(n), "");
                 }
                 
                 //if the script does not exist, don't do anything

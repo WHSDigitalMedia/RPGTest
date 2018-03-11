@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="7" name="datafiles">
+  <datafiles number="12" name="datafiles">
     <datafile>
       <name>move_data.ini</name>
       <exists>-1</exists>
@@ -38,7 +38,7 @@
       </ConfigOptions>
       <filename>item_data.ini</filename>
     </datafile>
-    <datafiles number="7" name="Combat_Interactions">
+    <datafiles number="12" name="Combat_Interactions">
       <datafile>
         <name>npc_3.ini</name>
         <exists>-1</exists>
@@ -57,8 +57,27 @@
         <filename>npc_3.ini</filename>
       </datafile>
     </datafiles>
-    <datafiles number="7" name="Text_Interactions">
-      <datafiles number="7" name="NPC_1">
+    <datafiles number="12" name="Text_Interactions">
+      <datafiles number="12" name="Flan_Bedroom">
+        <datafile>
+          <name>bedroom.ini</name>
+          <exists>-1</exists>
+          <size>950</size>
+          <exportAction>2</exportAction>
+          <exportDir></exportDir>
+          <overwrite>0</overwrite>
+          <freeData>-1</freeData>
+          <removeEnd>0</removeEnd>
+          <store>0</store>
+          <ConfigOptions>
+            <Config name="Default">
+              <CopyToMask>9223372036854775807</CopyToMask>
+            </Config>
+          </ConfigOptions>
+          <filename>bedroom.ini</filename>
+        </datafile>
+      </datafiles>
+      <datafiles number="12" name="NPC_1">
         <datafile>
           <name>npc_1_main_room.ini</name>
           <exists>-1</exists>
@@ -99,21 +118,28 @@
     <sprites name="Environment">
       <sprite>sprites\spr_wall</sprite>
     </sprites>
+    <sprite>sprites\spr_tv</sprite>
     <sprite>sprites\spr_npc</sprite>
     <sprite>sprites\spr_door</sprite>
     <sprite>sprites\spr_menu_screen</sprite>
     <sprite>sprites\sprite14</sprite>
     <sprite>sprites\sprite15</sprite>
-    <sprite>sprites\sprite16</sprite>
+    <sprite>sprites\spr_flan_head</sprite>
+    <sprite>sprites\spr_player</sprite>
+    <sprite>sprites\spr_narrator</sprite>
+    <sprite>sprites\spr_dresser</sprite>
+    <sprite>sprites\spr_bed</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\bg_house</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="Textboxes">
       <script>scripts\end_conversation.gml</script>
     </scripts>
     <scripts name="Buttons">
-      <script>scripts\quit_game.gml</script>
+      <script>scripts\start_game.gml</script>
       <script>scripts\pause_game.gml</script>
       <script>scripts\set_text_color_white.gml</script>
       <script>scripts\view_equippable.gml</script>
@@ -126,12 +152,14 @@
     <script>scripts\use_move.gml</script>
     <script>scripts\display_desc.gml</script>
     <script>scripts\display_inv.gml</script>
+    <script>scripts\show_inv_desc.gml</script>
     <script>scripts\toggle_inv_desc.gml</script>
     <script>scripts\pick_target.gml</script>
     <script>scripts\mouse_check_over.gml</script>
     <script>scripts\script_execute_ext.gml</script>
   </scripts>
   <fonts name="fonts">
+    <font>fonts\fnt_pixel</font>
     <font>fonts\fnt_arial16</font>
   </fonts>
   <objects name="objects">
@@ -141,6 +169,9 @@
       <object>objects\class_npc</object>
       <object>objects\npc_1</object>
       <object>objects\npc_2</object>
+      <object>objects\interact_tv</object>
+      <object>objects\interact_bed</object>
+      <object>objects\interact_dresser</object>
     </objects>
     <objects name="Controllers">
       <object>objects\controller_main_menu</object>
@@ -158,6 +189,8 @@
     <objects name="Environment">
       <object>objects\class_solid</object>
       <object>objects\class_wall</object>
+      <object>objects\obj_bed</object>
+      <object>objects\obj_dresser</object>
       <object>objects\class_door</object>
     </objects>
     <objects name="GUI">
@@ -187,8 +220,8 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_main_menu</room>
-    <room>rooms\rm_main_room</room>
-    <room>rooms\rm_side_room</room>
+    <room>rooms\rm_flan_bedroom</room>
+    <room>rooms\rm_flan_main_room</room>
     <room>rooms\rm_pause_menu</room>
     <room>rooms\rm_map_menu</room>
     <room>rooms\rm_inventory_menu</room>

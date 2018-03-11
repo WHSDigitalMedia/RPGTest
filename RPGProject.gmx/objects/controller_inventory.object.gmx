@@ -54,7 +54,7 @@ mode = EQUIPPABLE;
 buttonsCreated = false;
 itemSelected = "";
 
-inventory_add("Hat", "Sword", "Hat", "Health Potion", "Speed Potion", "Health Potion", "Coffee Cup");
+inventory_add("Hat", "Sword", "Hat", "Sword", "Sword", "Sword", "Hat", "Health Potion", "Speed Potion", "Health Potion", "Coffee Cup");
 </string>
           </argument>
         </arguments>
@@ -162,20 +162,30 @@ if (!buttonsCreated) {
         }
     }
     
+    var xPos = 544;
+    var yPos = 0;
     switch (mode) {
         case EQUIPPABLE:        
             //create buttons with items
             if (ds_exists(equippableList, ds_type_list)) {
                 for (var i = 0; i &lt; ds_list_size(equippableList); i++) {
-                    with (instance_create(room_width/2, room_height/2 + i * 64, class_button)) {
+                    if (i &gt;= 10) {
+                        xPos = 1056;
+                        yPos = 0;
+                    } else if (i &gt;= 5) {
+                        xPos = 800;
+                        yPos = 0;
+                    }
+                    with (instance_create(xPos, 256 + yPos * 64, class_button)) {
                         sprite_index = spr_inv_button;
                         text = ds_list_find_value(other.equippableList, i);
-                        overAction = set_text_color_white;
+                        overAction = show_inv_desc;
                         leaveAction = set_text_color_black;
                         clickAction = inventory_equip;
                         textAlign = LEFT;
                         textXPos = -sprite_width/2 + 4;
                     }
+                    yPos++;
                 }
             }
             break;
@@ -183,15 +193,23 @@ if (!buttonsCreated) {
             //create buttons with items
             if (ds_exists(consumableList, ds_type_list)) {
                 for (var i = 0; i &lt; ds_list_size(consumableList); i++) {
-                    with (instance_create(room_width/2, room_height/2 + i * 64, class_button)) {
+                    if (i &gt;= 10) {
+                        xPos = 1056;
+                        yPos = 0;
+                    } else if (i &gt;= 5) {
+                        xPos = 800;
+                        yPos = 0;
+                    }
+                    with (instance_create(xPos, 256 + yPos * 64, class_button)) {
                         sprite_index = spr_inv_button;
                         text = ds_list_find_value(other.consumableList, i);
-                        overAction = set_text_color_white;
+                        overAction = show_inv_desc;
                         leaveAction = set_text_color_black;
                         clickAction = inventory_equip;
                         textAlign = LEFT;
                         textXPos = -sprite_width/2 + 4;
                     }
+                    yPos++;
                 }
             }
             break;
@@ -199,15 +217,23 @@ if (!buttonsCreated) {
             //create buttons with items
             if (ds_exists(miscList, ds_type_list)) {
                 for (var i = 0; i &lt; ds_list_size(miscList); i++) {
-                    with (instance_create(room_width/2, room_height/2 + i * 64, class_button)) {
+                    if (i &gt;= 10) {
+                        xPos = 1056;
+                        yPos = 0;
+                    } else if (i &gt;= 5) {
+                        xPos = 800;
+                        yPos = 0;
+                    }
+                    with (instance_create(xPos, 256 + yPos * 64, class_button)) {
                         sprite_index = spr_inv_button;
                         text = ds_list_find_value(other.miscList, i);
-                        overAction = set_text_color_white;
+                        overAction = show_inv_desc;
                         leaveAction = set_text_color_black;
                         clickAction = inventory_equip;
                         textAlign = LEFT;
                         textXPos = -sprite_width/2 + 4;
                     }
+                    yPos++;
                 }
             }
             break;
@@ -216,10 +242,10 @@ if (!buttonsCreated) {
     
     if (ds_exists(equippedList, ds_type_list)) {
         for (var i = 0; i &lt; ds_list_size(equippedList); i++) {
-            with (instance_create(room_width/3, room_height/2 + i * 64, class_button)) {
+            with (instance_create(192, 416 + i * 64, class_button)) {
                 sprite_index = spr_inv_button;
                 text = ds_list_find_value(other.equippedList, i);
-                overAction = set_text_color_white;
+                overAction = show_inv_desc;
                 leaveAction = set_text_color_black;
                 clickAction = inventory_unequip;
                 textAlign = LEFT;
@@ -389,20 +415,6 @@ if (controller_combat.mode == controller_combat.INVENTORY) {
       </action>
       <action>
         <libid>1</libid>
-        <id>424</id>
-        <kind>2</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
-      <action>
-        <libid>1</libid>
         <id>612</id>
         <kind>0</kind>
         <userelative>0</userelative>
@@ -500,6 +512,20 @@ if (!buttonsCreated) {
       </action>
       <action>
         <libid>1</libid>
+        <id>424</id>
+        <kind>2</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -518,6 +544,29 @@ if (!buttonsCreated) {
 if (room != rm_inventory_menu &amp;&amp; room != rm_combat_interaction) {
     buttonsCreated = false;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>itemSelected = "";
 </string>
           </argument>
         </arguments>
@@ -615,11 +664,13 @@ if (ds_exists(equippedList, ds_type_list)) {
           <argument>
             <kind>1</kind>
             <string>///Draw player stats
-draw_text(room_width/3 - 128, 64 + 48 * 0, "Atk");
-draw_text(room_width/3 - 128, 64 + 48 * 1, "Def");
-draw_text(room_width/3 - 128, 64 + 48 * 2, "Spd");
-draw_text(room_width/3 - 128, 64 + 48 * 3, "Acc");
-draw_text(room_width/3 - 128, 64 + 48 * 4, "HP");
+draw_text(room_width/3 - 128, 64 + 48 * 0, "Power");
+draw_text(room_width/3 - 128, 64 + 48 * 1, "C Power");
+draw_text(room_width/3 - 128, 64 + 48 * 2, "Speed");
+draw_text(room_width/3 - 128, 64 + 48 * 3, "Defense");
+draw_text(room_width/3 - 128, 64 + 48 * 4, "C Defense");
+draw_text(room_width/3 - 128, 64 + 48 * 5, "HP");
+draw_text(room_width/3 - 128, 64 + 48 * 6, "MP");
 
 for (var i = 0; i &lt; array_length_1d(class_player.stat); i++) {
     draw_text(room_width/3, 64 + i * 48, class_player.stat[i]);
@@ -786,16 +837,85 @@ ini_close();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Draw player stats
-draw_text(room_width/3 - 128, 64 + 48 * 0, "Atk");
-draw_text(room_width/3 - 128, 64 + 48 * 1, "Def");
-draw_text(room_width/3 - 128, 64 + 48 * 2, "Spd");
-draw_text(room_width/3 - 128, 64 + 48 * 3, "Acc");
-draw_text(room_width/3 - 128, 64 + 48 * 4, "HP");
+            <string>///draw the item descriptions
 
-for (var i = 0; i &lt; array_length_1d(class_player.stat); i++) {
-    draw_text(room_width/3, 64 + i * 48, class_player.stat[i]);
+ini_open("item_data.ini");
+
+if (ini_section_exists(itemSelected)) {
+    var desc = ini_read_string(itemSelected, "desc", "");
+    draw_text(416, 608, "Description: " + desc);
+    
+    var num = "";
+    for (var i = 1; i &lt; 3; i++) {
+        var stat = ini_read_real(itemSelected, "stat" + string(i), 0);
+        var amt = ini_read_real(itemSelected, "amt" + string(i), 0);
+        
+        if (amt != 0) {
+            switch (stat) {
+                case 0: 
+                    num += "Power: " + string(amt);
+                    break;
+                case 1:
+                    num += "C Power: " + string(amt);
+                    break;
+                case 2:
+                    num += "Speed: " + string(amt);
+                    break;
+                case 3:
+                    num += "Defense: " + string(amt);
+                    break;
+                case 4:
+                    num += "C Defense: " + string(amt);
+                    break;
+                case 5:
+                    num += "HP: " + string(amt);
+                    break;
+                case 6:
+                    num += "MP: " + string(amt);
+                    break;
+                default: break;
+            }   
+            num += "   ";
+        }
+    }
+    draw_text(416, 640, num);
 }
+
+ini_close();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw player stats
+draw_sprite_ext(spr_player_idle, 0, 192, 96, 5, 5, 0, image_blend, image_alpha);
+
+draw_set_halign(fa_center); 
+draw_text(192, 192, "Flan");
+
+draw_set_halign(fa_left);
+draw_text(64, 192 + 32 * 1, "Power: " + string(class_player.stat[0]));
+draw_text(64, 192 + 32 * 2, "C Power: " + string(class_player.stat[1]));
+draw_text(64, 192 + 32 * 3, "Speed: " + string(class_player.stat[2]));
+draw_text(64, 192 + 32 * 4, "Defense: " + string(class_player.stat[3]));
+draw_text(192, 192 + 32 * 1, "C Defense: " + string(class_player.stat[4]));
+draw_text(192, 192 + 32 * 2, "HP: " + string(class_player.stat[5]));
+draw_text(192, 192 + 32 * 3, "MP: " + string(class_player.stat[6]));
 </string>
           </argument>
         </arguments>

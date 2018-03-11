@@ -37,7 +37,7 @@ global.pause = global.UNPAUSE;
 intensity = 0.7; //the blur intensity
 steps = 3; //also affects intensity but it's better to change the above value
 draw = false; //has the sprite been created
-roomIndex = rm_main_room; //room to return to
+roomIndex = room; //room to return to
 spr = -1; //the sprite the surface will draw
 
 savedNPCX = 0;

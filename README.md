@@ -22,7 +22,7 @@ _**This project was created as a starting engine for future RPG games.**_ It is 
 * Automatically inserts line breaks
 * Displays responses that can be selected using the number keys
 * Pulls text, responses, response actions, and sprites from external INI file
-#### 4. [NPCs](#NPCs)
+#### 4. [NPCs](#npcs)
 * Has four movement types: completely still, still but alternates directions, random movement, and back-forth linear motion
 * Interacts with the player (can be set to with toggle or without toggle)
 * Holds variables that point to the location of their corresponding INI file for textboxes (see above)
@@ -37,15 +37,15 @@ _**This project was created as a starting engine for future RPG games.**_ It is 
 * In default mode, the player has to walk over doors to toggle
 * In map mode, the player has to click on doors to toggle, and they display the name of their target location
 * The map screen draws a blinking player sprite over the door representing their current location
-#### 7. [Items/Inventory](#Items/Inventory)
+#### 7. [Items/Inventory](#itemsinventory)
 * The inventory is actually comprised of four lists: consumables, equippables, miscellaneous, and currently equipped
 * The lists can be set to sort in alphabetical order ascending or descending
 * The currently equipped list is always displayed, buttons are used to toggle the display between the remaining three
 * Item data is actually stored externally in an INI file
 * Items can affect multiple stats, have a description, type, subtype, and cost (all stored in the INI file)
-#### 8. [Camera](#Camera)
+#### 8. [Camera](#camera)
 * The camera has three modes: none, fixed, and track (the player)
-#### 9. [Combat](#Combat)
+#### 9. [Combat](#combat)
 * Currently in progress
 #### 9. [Important Notes](#important-notes)
 

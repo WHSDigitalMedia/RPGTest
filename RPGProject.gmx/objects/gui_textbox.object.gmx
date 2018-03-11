@@ -140,10 +140,12 @@ if (string_width(text) &gt; width) {
 //sets the draw location of the speaker
 if (orientation == LEFT) {
     x = controller_text.padding * 2;
-} else {
-    if (spr != -1) {
-        x = room_width - controller_text.padding * 2 - sprite_get_width(spr)/2;
-    }
+} else if (orientation == RIGHT) {
+    x = room_width - controller_text.padding * 2 - sprite_get_width(spr)/2;
+} 
+
+if (spr == spr_narrator) {
+    orientation = CENTER;
 }
 </string>
           </argument>
@@ -171,14 +173,15 @@ if (orientation == LEFT) {
 var oldAlpha = draw_get_alpha(); //get current alpha value
 draw_set_alpha(myAlpha);
 
-//draws the sprite
-if (sprite_exists(spr) &amp;&amp; visible) {
-    draw_sprite(spr, 0, x, y);
-}
-
 //draw the box
-draw_roundrect_colour_ext(x1, y1, x2, y2, rad, rad, boxColor, boxColor, false);
-draw_roundrect_colour_ext(x1, y1, x2, y2, rad, rad, outlineColor, outlineColor, true);
+if (spr != spr_narrator) {
+    draw_roundrect_colour_ext(x1, y1, x2, y2, rad, rad, boxColor, boxColor, false);
+    draw_roundrect_colour_ext(x1, y1, x2, y2, rad, rad, outlineColor, outlineColor, true);
+    //draws the sprite
+    if (sprite_exists(spr) &amp;&amp; visible) {
+        draw_sprite(spr, 0, x, y);
+    }
+}
 
 //draw the text
 draw_set_font(textFont);
