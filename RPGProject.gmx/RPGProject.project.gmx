@@ -172,6 +172,7 @@
       <object>objects\interact_tv</object>
       <object>objects\interact_bed</object>
       <object>objects\interact_dresser</object>
+      <object>objects\interact_start</object>
     </objects>
     <objects name="Controllers">
       <object>objects\controller_main_menu</object>

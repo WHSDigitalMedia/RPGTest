@@ -1,3 +1,4 @@
+#define end_conversation
 ///end_conversation();
 texture_set_interpolation(false);
 with (gui_textbox) {
@@ -13,3 +14,12 @@ with (class_npc) {
     persistent = false;
 }
 global.pause = global.UNPAUSE;
+
+#define end_conversation_destroy
+///end_conversation_destroy()
+//like end_conversation, but now the calling instance is destroyed
+//so that it can't be used again
+with (class_npc) {
+    instance_destroy();
+}
+end_conversation();

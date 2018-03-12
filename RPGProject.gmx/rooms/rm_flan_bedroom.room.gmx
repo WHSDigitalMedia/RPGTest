@@ -55,7 +55,7 @@
     <instance objName="hud_pause_button" x="192" y="96" name="inst_0EDD85D3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="hud_inventory_button" x="224" y="96" name="inst_054950BB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="hud_map_button" x="256" y="96" name="inst_7767F569" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="class_player" x="448" y="304" name="inst_1CD5A484" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="class_player" x="440" y="294" name="inst_1CD5A484" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="controller_pause" x="320" y="96" name="inst_C4D7BFBD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="class_wall" x="368" y="240" name="inst_55EBFAF7" locked="0" code="" scaleX="2" scaleY="0.645161271095276" colour="4294967295" rotation="0"/>
     <instance objName="interact_tv" x="359" y="232" name="inst_DA56FD15" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -70,6 +70,7 @@
     <instance objName="interact_bed" x="520" y="314" name="inst_4408BC50" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="class_door" x="512" y="208" name="inst_1D1CE8F2" locked="0" code="xTarg = 640;&#xA;yTarg = 320;&#xA;roomTarg = rm_flan_main_room;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="controller_inventory" x="288" y="96" name="inst_7B3E5018" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="interact_start" x="432" y="304" name="inst_F7BA07D9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bg_house" x="336" y="240" w="32" h="32" xo="96" yo="32" id="10000162" name="inst_127D03F4" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
