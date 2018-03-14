@@ -46,7 +46,10 @@ _**This project was created as a starting engine for future RPG games.**_ It is 
 #### 8. [Camera](#camera)
 * The camera has three modes: none, fixed, and track (the player)
 #### 9. [Combat](#combat)
-* Currently in progress
+* The side that goes first is based off the average speed, still working on getting allies
+* Enemies' moves are pulled from an external INI file, planning to make it so that each enemy (except final bosses) only have one move
+* Enemies pick moves/targets at random
+* Player can use four moves and an item - right now, a move consumes a turn, planning to change it to an MP-based system in the future
 #### 9. [Important Notes](#important-notes)
 
 ## Player
@@ -375,8 +378,32 @@ Note that this explanation will only cover variables whose purpose may not be re
 * **xTarg/yTarg** refer to the location the camera is focused on. If *mode = TRACK*, then these variables are automatically set to the player's position. For *mode = FIXED*, these variables can be set from the Creation Code. After the camera controller is placed in a room, right-click to access a drop-down menu, one option of which is "Creation Code", which runs after the object's "Creation Event", and can thus be used to override values.
 
 ## Combat
+```
 
-#### Coming soon! (Hopefully...)
+[Enemies]
+1="npc_1";
+2="npc_1";
+
+[0]
+name="Tackle"
+type=0
+amount=2
+stat=0
+
+[1]
+name="Heal"
+type=2
+amount=1
+stat=0
+
+[2]
+name="Multiheal"
+type=3
+amount=2
+stat=0
+```
+#### Explanation of how to use INI files
+This is *npc_3.ini*, and while NPC_3 does not exist anymore (he was only around for testing purposes), this file serves a pretty good explanation of how these NPCs will work. When you want an NPC to initiate combat, set a response script in their dialog system to *init_combat*. Then *controller_combat* will take care of things from there. It will spawn in the enemies listed above in addition to the original enemy. 
 
 ## Important Notes
 ### 1. Variables
@@ -446,12 +473,15 @@ The function *event_inherited()* copies the code over from the same event of the
 The following are important numbers to remember for the INI files.
 #### Character stats
 ```
-ATK = 0;
-DEF = 1;
+PWR = 0;
+CPWR = 1;
 SPD = 2;
-ACC = 3;
-HP = 4;
+DEF = 3;
+CDEF = 4;
+HP = 5;
+MP = 6;
 ```
+Important Note: NPCs have not been updated to have the same variables as the player. Furthermore, none of the variables actually affect combat yet. For future reference, they will add directly to base stats. For example, if the player has a power-based move that deals 5 base damage and the player has a power stat of 7, then the move deals 5(+7) damage.
 #### Move types
 ```
 SINGLE_ATTACK = 0;

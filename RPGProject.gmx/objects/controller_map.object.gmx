@@ -79,8 +79,8 @@ alarm_set(0, alarmSpeed);
             <string>///Draw the player sprite
 for (var i = 0; i &lt; instance_number(class_door); i++) {
     var inst = instance_find(class_door, i);
-    if (inst.roomTarg == controller_pause.roomIndex) {
-        draw_sprite(spr_player_idle, 0, inst.x, inst.y);
+    if (inst.approxRoom == controller_pause.approxRoom) {
+        draw_sprite(spr_flan_head, 0, inst.x, inst.y);
         i = instance_number(class_door);
     }
 }

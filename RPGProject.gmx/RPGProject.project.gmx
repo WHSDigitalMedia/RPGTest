@@ -131,6 +131,7 @@
     <sprite>sprites\spr_bed</sprite>
   </sprites>
   <backgrounds name="background">
+    <background>background\bg_map</background>
     <background>background\bg_house</background>
   </backgrounds>
   <paths name="paths"/>
@@ -168,7 +169,6 @@
     <objects name="NPCs">
       <object>objects\class_npc</object>
       <object>objects\npc_1</object>
-      <object>objects\npc_2</object>
       <object>objects\interact_tv</object>
       <object>objects\interact_bed</object>
       <object>objects\interact_dresser</object>
@@ -223,6 +223,7 @@
     <room>rooms\rm_main_menu</room>
     <room>rooms\rm_flan_bedroom</room>
     <room>rooms\rm_flan_main_room</room>
+    <room>rooms\rm_flan_outside_home</room>
     <room>rooms\rm_pause_menu</room>
     <room>rooms\rm_map_menu</room>
     <room>rooms\rm_inventory_menu</room>

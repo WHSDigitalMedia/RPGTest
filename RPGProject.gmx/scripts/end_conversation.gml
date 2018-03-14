@@ -11,7 +11,7 @@ with (class_player) {
     allowInput = true;
 }
 with (class_npc) {
-    persistent = false;
+    alarm_set(1, 1); //delay to reset persistency
 }
 global.pause = global.UNPAUSE;
 

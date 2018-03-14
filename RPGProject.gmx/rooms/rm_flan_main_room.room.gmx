@@ -60,6 +60,8 @@
     <instance objName="class_wall" x="704" y="256" name="inst_60120EB4" locked="0" code="" scaleX="1" scaleY="5" colour="4294967295" rotation="0"/>
     <instance objName="class_wall" x="528" y="352" name="inst_F80FA146" locked="0" code="" scaleX="10" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="class_door" x="640" y="336" name="inst_39D53DCD" locked="0" code="xTarg = 512;&#xA;yTarg = 224;&#xA;roomTarg = rm_flan_bedroom;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="npc_1" x="560" y="256" name="inst_79E34F70" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="class_door" x="400" y="176" name="inst_B303E055" locked="0" code="xTarg = 480;&#xA;yTarg = 672;&#xA;roomTarg = rm_flan_outside_home;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bg_house" x="368" y="176" w="32" h="32" xo="64" yo="0" id="10000268" name="inst_C75FE53C" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

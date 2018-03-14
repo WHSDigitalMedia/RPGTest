@@ -57,11 +57,16 @@ with (controller_pause) {
         with (class_npc) {
             persistent = false;
         }
-        global.pause = global.MAP_PAUSE;
         roomIndex = room;
+        //setting the approx room for the map
+        if (roomIndex == rm_flan_bedroom || rm_flan_main_room || rm_flan_outside_home) {
+            approxRoom = rm_flan_main_room;
+        }
         room_goto(rm_map_menu);
+        global.pause = global.MAP_PAUSE;
     }
 }
+
 #define init_combat
 ///init_combat()
 

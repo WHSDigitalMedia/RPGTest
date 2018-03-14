@@ -32,10 +32,10 @@ moveType = RANDOM_WALK;
 textFile = "npc_1_main_room.ini";
 directory = working_directory + "Text_Interactions\NPC_1\"
 textSource = directory + textFile;
-textSection = "bleh";
-sprSection = "bleh-sprites";
-responseSection = "bleh-responses";
-scriptSection = "bleh-scripts";
+textSection = "default";
+sprSection = "default-sprites";
+responseSection = "default-responses";
+scriptSection = "default-scripts";
 </string>
           </argument>
         </arguments>

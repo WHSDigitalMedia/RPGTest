@@ -28,6 +28,7 @@
             <string>///Initialize Variables
 roomTarg = -1;
 name = "";
+approxRoom = -1;
 xTarg = 0;
 yTarg = 0;
 lock = false;
@@ -192,6 +193,8 @@ if (place_meeting(x, y, class_player) &amp;&amp; keyboard_check_pressed(ord("E")
           <argument>
             <kind>1</kind>
             <string>///Using the door as a fast travel
+visible = true;
+
 if (point_in_rectangle(mouse_x, mouse_y, x - sprite_width/2, y - sprite_height/2, x + sprite_width/2, y + sprite_height/2)) {
     if (mouse_check_button_pressed(mb_left)) {
         if (!lock) {
@@ -222,6 +225,32 @@ if (point_in_rectangle(mouse_x, mouse_y, x - sprite_width/2, y - sprite_height/2
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///mode control
+if (room == rm_map_menu) {
+    mode = MAP;
+} else {
+    mode = DEFAULT;
+}
+</string>
+          </argument>
+        </arguments>
       </action>
     </event>
     <event eventtype="8" enumb="64">
@@ -284,12 +313,14 @@ if (point_in_rectangle(mouse_x, mouse_y, x - sprite_width/2, y - sprite_height/2
           <argument>
             <kind>1</kind>
             <string>///Draw the name of the destination
-draw_set_font(fnt_arial16);
-draw_set_halign(fa_center);
-
-draw_text_colour(x, y + sprite_height, name, c_black, c_black, c_black, c_black, 1);
-
-draw_set_halign(fa_left);
+if (point_in_rectangle(mouse_x, mouse_y, x - sprite_width/2, y - sprite_height/2, x + sprite_width/2, y + sprite_height/2)) {
+    draw_set_font(fnt_arial16);
+    draw_set_halign(fa_center);
+    
+    draw_text_colour(x, y + sprite_height, name, c_black, c_black, c_black, c_black, 1);
+    
+    draw_set_halign(fa_left);
+}
 </string>
           </argument>
         </arguments>
