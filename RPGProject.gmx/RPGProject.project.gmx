@@ -220,6 +220,7 @@
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_initialize</room>
     <room>rooms\rm_main_menu</room>
     <room>rooms\rm_flan_bedroom</room>
     <room>rooms\rm_flan_main_room</room>
