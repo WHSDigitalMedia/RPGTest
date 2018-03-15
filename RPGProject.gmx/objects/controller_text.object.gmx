@@ -29,6 +29,11 @@
 padding = 64;
 width = room_width - (padding * 2);
 height = room_height - (padding * 2);
+myAlpha = 0;
+fadeDuration = room_speed * 0.25; //where room_speed = 1 sec
+fadeSpeed = 1/fadeDuration;
+//alarms 0 and 1 set after fade in complete
+alarmsSet = false;
 
 boxColor = c_white;
 outlineColor = c_black;
@@ -42,13 +47,9 @@ global.textAppearDelay = alarmSpeed * room_speed;
 y = padding * 2;
 initY = y;
 finalY = y;
-alarm_set(0, global.textAppearDelay);
 
 scrollSpeed = 20; //pixels per something maybe?... I don't actually know
 
-//creating surfaces - requires delay so that the pause
-//controller can draw the blurred sprite first
-alarm_set(1, global.textAppearDelay);
 sprTopSurf = -1;
 sprBottomSurf = -1;
 </string>
@@ -191,12 +192,11 @@ if (pos == instance_number(gui_textbox) &amp;&amp; instance_exists(class_npc)) {
         for (var i = 1; i &lt; 9; i++) { //number of possible inputs
             //check for inputs
             if (keyboard_check_pressed(ord(string(i)))) {
+                var arg;
+                //args to use
+                arg[1] = ""; arg[2] = ""; arg[3] = ""; arg[4] = ""; arg[5] = "";
                 //get corresponding script
                 var script = asset_get_index(ini_read_string(inst.scriptSection, string(i), "noone"));
-                //get corresponding arguments
-                var arg;
-                //set default values for arg for script_execute_ext
-                arg[1] = ""; arg[2] = ""; arg[3] = ""; arg[4] = ""; arg[5] = "";
                 for (var n = 1; n &lt; array_length_1d(arg); n++) {
                     arg[n] = ini_read_string(inst.argumentSection, string(i) + "_" + string(n), "");
                 }
@@ -204,16 +204,47 @@ if (pos == instance_number(gui_textbox) &amp;&amp; instance_exists(class_npc)) {
                 //if the script does not exist, don't do anything
                 if (script != noone) {
                     script_execute_ext(script, arg[1], arg[2], arg[3], arg[4], arg[5]);
-                    i = 9;
-                    ini_close();
                     if (script != init_combat) {
                         end_conversation();
                     }
+                    i = 9;
+                    ini_close();
                 }
             }
         }
     }    
     ini_close();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Fade control
+if (myAlpha &lt; 1) {
+    myAlpha += fadeSpeed;
+} 
+if (myAlpha &gt;= 1 &amp;&amp; !alarmsSet) {
+    //creating surfaces - requires delay so that the pause
+    //controller can draw the blurred sprite first
+    alarm_set(0, global.textAppearDelay);
+    alarm_set(1, global.textAppearDelay);
+    alarmsSet = true;
 }
 </string>
           </argument>
@@ -325,8 +356,11 @@ if (sprite_exists(sprBottomSurf)) {
           <argument>
             <kind>1</kind>
             <string>///Draw box
+var oldAlpha = draw_get_alpha();
+draw_set_alpha(myAlpha);
 draw_roundrect_colour_ext(padding, padding, padding + width, padding + height, rad, rad, outlineColor, outlineColor, true);
 draw_roundrect_colour_ext(padding, padding, padding + width, padding + height, rad, rad, boxColor, boxColor, false);
+draw_set_alpha(oldAlpha);
 </string>
           </argument>
         </arguments>

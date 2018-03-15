@@ -97,7 +97,7 @@ if (room != rm_text_interaction) { //so player can't exit text
           <argument>
             <kind>1</kind>
             <string>///What to do with player
-if (global.pause != global.UNPAUSE &amp;&amp; (room == rm_pause_menu || room == rm_map_menu || room == rm_inventory_menu)) {
+if (global.pause != global.UNPAUSE &amp;&amp; (room == rm_pause_menu || rm_map_menu || rm_inventory_menu || rm_text_interaction)) {
     //basically makes the player temporarily "not exist"
     with (class_player) {
         allowMovement = false;

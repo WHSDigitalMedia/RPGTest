@@ -9,6 +9,7 @@ room_goto(controller_pause.roomIndex);
 with (class_player) {
     allowMovement = true;
     allowInput = true;
+    visible = true;
 }
 with (class_npc) {
     alarm_set(1, 1); //delay to reset persistency

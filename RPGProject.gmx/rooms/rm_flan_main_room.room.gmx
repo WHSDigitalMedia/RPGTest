@@ -149,6 +149,10 @@
     <tile bgName="bg_house" x="688" y="144" w="32" h="32" xo="96" yo="0" id="10000354" name="inst_1973ADCC" depth="-99" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_house" x="688" y="336" w="32" h="32" xo="96" yo="0" id="10000355" name="inst_18529AE1" depth="-99" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="bg_house" x="384" y="144" w="32" h="32" xo="0" yo="0" id="10000356" name="inst_F4F4DF96" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_house" x="608" y="304" w="32" h="32" xo="64" yo="64" id="10000367" name="inst_05C7D89B" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_house" x="640" y="304" w="32" h="32" xo="96" yo="64" id="10000368" name="inst_5500247C" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_house" x="400" y="176" w="32" h="32" xo="96" yo="64" id="10000369" name="inst_6058F6E6" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="bg_house" x="368" y="176" w="32" h="32" xo="64" yo="64" id="10000370" name="inst_37AEC63F" depth="-100" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
   </tiles>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>

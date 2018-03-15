@@ -114,21 +114,22 @@
       <sprite>sprites\spr_player_up</sprite>
       <sprite>sprites\spr_player_left</sprite>
       <sprite>sprites\spr_player_right</sprite>
+      <sprite>sprites\spr_flan_head</sprite>
     </sprites>
     <sprites name="Environment">
       <sprite>sprites\spr_wall</sprite>
+      <sprite>sprites\spr_door</sprite>
+      <sprites name="Bedroom">
+        <sprite>sprites\spr_bed_top</sprite>
+      </sprites>
     </sprites>
-    <sprite>sprites\spr_tv</sprite>
+    <sprites name="Combat">
+      <sprite>sprites\spr_allySpawnPoint</sprite>
+      <sprite>sprites\spr_enemySpawnPoint</sprite>
+    </sprites>
     <sprite>sprites\spr_npc</sprite>
-    <sprite>sprites\spr_door</sprite>
-    <sprite>sprites\spr_menu_screen</sprite>
-    <sprite>sprites\sprite14</sprite>
-    <sprite>sprites\sprite15</sprite>
-    <sprite>sprites\spr_flan_head</sprite>
-    <sprite>sprites\spr_player</sprite>
     <sprite>sprites\spr_narrator</sprite>
-    <sprite>sprites\spr_dresser</sprite>
-    <sprite>sprites\spr_bed</sprite>
+    <sprite>sprites\spr_menu_screen</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_map</background>
@@ -136,26 +137,28 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
+    <scripts name="Combat">
+      <script>scripts\display_inv.gml</script>
+      <script>scripts\display_desc.gml</script>
+      <script>scripts\pick_target.gml</script>
+      <script>scripts\use_move.gml</script>
+    </scripts>
     <scripts name="Textboxes">
       <script>scripts\end_conversation.gml</script>
-    </scripts>
-    <scripts name="Buttons">
-      <script>scripts\start_game.gml</script>
-      <script>scripts\pause_game.gml</script>
-      <script>scripts\set_text_color_white.gml</script>
-      <script>scripts\view_equippable.gml</script>
     </scripts>
     <scripts name="Inventory">
       <script>scripts\inventory_add.gml</script>
       <script>scripts\inventory_consume_item.gml</script>
+      <script>scripts\view_equippable.gml</script>
       <script>scripts\inventory_equip.gml</script>
+      <script>scripts\toggle_inv_desc.gml</script>
+      <script>scripts\show_inv_desc.gml</script>
     </scripts>
-    <script>scripts\use_move.gml</script>
-    <script>scripts\display_desc.gml</script>
-    <script>scripts\display_inv.gml</script>
-    <script>scripts\show_inv_desc.gml</script>
-    <script>scripts\toggle_inv_desc.gml</script>
-    <script>scripts\pick_target.gml</script>
+    <scripts name="Misc. Buttons">
+      <script>scripts\start_game.gml</script>
+      <script>scripts\pause_game.gml</script>
+      <script>scripts\set_text_color_white.gml</script>
+    </scripts>
     <script>scripts\mouse_check_over.gml</script>
     <script>scripts\script_execute_ext.gml</script>
   </scripts>
@@ -190,9 +193,8 @@
     <objects name="Environment">
       <object>objects\class_solid</object>
       <object>objects\class_wall</object>
-      <object>objects\obj_bed</object>
-      <object>objects\obj_dresser</object>
       <object>objects\class_door</object>
+      <object>objects\obj_bed_top</object>
     </objects>
     <objects name="GUI">
       <object>objects\gui_healthbar</object>
