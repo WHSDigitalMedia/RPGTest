@@ -102,7 +102,9 @@ if (global.pause != global.UNPAUSE &amp;&amp; (room == rm_pause_menu || rm_map_m
     with (class_player) {
         allowMovement = false;
         allowInput = false;
-        visible = false;
+        if (!other.draw) {
+            visible = false;
+        }
     }
 } //what to do when unpausing is in the toggle pause event
 </string>

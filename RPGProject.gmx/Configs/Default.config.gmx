@@ -486,7 +486,7 @@
     <option_win8_certificate_location>Windows8_TemporaryKey.pfx</option_win8_certificate_location>
     <option_win8_display_name>RPGProject</option_win8_display_name>
     <option_win8_internet_capable>0</option_win8_internet_capable>
-    <option_win8_interpolate>-1</option_win8_interpolate>
+    <option_win8_interpolate>0</option_win8_interpolate>
     <option_win8_landscape_allowed>-1</option_win8_landscape_allowed>
     <option_win8_landscape_flipped_allowed>-1</option_win8_landscape_flipped_allowed>
     <option_win8_logo>Configs\Default\Windows8\logos\logo150.png</option_win8_logo>

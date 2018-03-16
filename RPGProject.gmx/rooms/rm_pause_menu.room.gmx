@@ -52,6 +52,7 @@
   </views>
   <instances>
     <instance objName="main_menu_quit_button" x="640" y="320" name="inst_B2246463" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="pause_menu_fullscreen_button" x="640" y="416" name="inst_184759E7" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

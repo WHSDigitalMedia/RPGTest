@@ -31,7 +31,7 @@ textFont = fnt_arial16;
 textColor = c_black;
 spr = -1;
 
-rad = 4;
+rad = 8;
 outlineColor = c_black;
 boxColor = c_white;
 padding = 8;
@@ -104,20 +104,32 @@ if (!done &amp;&amp; visible) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Height and Orientation
+            <string>///Dimensions and Orientation
 var w = 32;
 var h = 32;
 if (sprite_exists(spr)) {
     var w = sprite_get_width(spr);
     var h = sprite_get_height(spr);
 }
-x1 = controller_text.padding * 2 + w;
+x1 = controller_text.padding * 2 + w * 2;
 y1 = y - h/2 - padding;
 //not sure why I need to mult, but otherwise it clips
-x2 = room_width - controller_text.padding * 2.25 - w;
+x2 = room_width - controller_text.padding * 2.25 - w * 2;
 y2 = y + height - padding;
 width = (x2 - padding) - (x1 + padding);
 height = string_height(text);
+
+if (orientation == LEFT) {
+    if (string_width(text) &lt; width) {
+        x2 = x1 + string_width(text) + padding;
+        width = (x2 - padding) - (x1 + padding);
+    }
+} else if (orientation == RIGHT) {
+    if (string_width(text) &lt; width) {
+        x1 = x2 - string_width(text) - padding;
+        width = (x2 - padding) - (x1 + padding);
+    }
+}
 
 //if the width goes over the edge of the textbox
 if (string_width(text) &gt; width) {
@@ -179,7 +191,17 @@ if (spr != spr_narrator) {
     draw_roundrect_colour_ext(x1, y1, x2, y2, rad, rad, outlineColor, outlineColor, true);
     //draws the sprite
     if (sprite_exists(spr) &amp;&amp; visible) {
+        draw_roundrect_colour_ext(x - 24, y - 24, x + 24, y + 24, rad, rad, c_white, c_black, true);
         draw_sprite(spr, 0, x, y);
+    }
+    //draws arrows indicating who's talking
+    draw_set_color(c_black);
+    if (orientation == LEFT) {
+        draw_triangle(x + 30, y, x1, y1, x1, y1 + 16, true);
+        draw_rectangle_colour(x1 - 2, y1, x1, y1 + 16, c_white, c_white, c_white, c_white, false);
+    } else if (orientation == RIGHT) {
+        draw_triangle(x - 30, y, x2, y1, x2, y1 + 16, true);
+        draw_rectangle_colour(x2, y1, x2 + 2, y1 + 16, c_white, c_white, c_white, c_white, false);
     }
 }
 

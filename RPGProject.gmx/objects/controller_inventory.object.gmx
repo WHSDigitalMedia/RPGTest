@@ -74,7 +74,7 @@ itemSelected = "";
           <argument>
             <kind>1</kind>
             <string>///Debug
-inventory_add("Dagger", "Golden Sword", "Imperial Chestplate", "Imperial Helmet", "Imperial Leggings", "Imperial Sandals", "Imperial Sword", "Iron Boots", "Iron Chestplate", "Iron Helmet", "Iron Leggings");
+//inventory_add("Dagger", "Golden Sword", "Imperial Chestplate", "Imperial Helmet", "Imperial Leggings", "Imperial Sandals", "Imperial Sword", "Iron Boots", "Iron Chestplate", "Iron Helmet", "Iron Leggings");
 </string>
           </argument>
         </arguments>

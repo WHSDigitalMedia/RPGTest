@@ -183,6 +183,7 @@
     <scripts name="Misc. Buttons">
       <script>scripts\start_game.gml</script>
       <script>scripts\pause_game.gml</script>
+      <script>scripts\toggle_fullscreen.gml</script>
       <script>scripts\set_text_color_white.gml</script>
     </scripts>
     <script>scripts\mouse_check_over.gml</script>
@@ -227,6 +228,7 @@
       <object>objects\gui_textbox</object>
       <objects name="Buttons">
         <object>objects\class_button</object>
+        <object>objects\pause_menu_fullscreen_button</object>
         <objects name="HUD">
           <object>objects\hud_pause_button</object>
           <object>objects\hud_inventory_button</object>
