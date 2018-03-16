@@ -27,11 +27,11 @@
             <kind>1</kind>
             <string>///Initialize Variables
 equippableList = ds_list_create();
-equippableMax = 10;
+equippableMax = 15;
 consumableList = ds_list_create();
-consumableMax = 10;
+consumableMax = 15;
 miscList = ds_list_create();
-miscMax = 10;
+miscMax = 15;
 list[0] = equippableList;
 list[1] = consumableList;
 list[2] = miscList;
@@ -53,8 +53,28 @@ mode = EQUIPPABLE;
 
 buttonsCreated = false;
 itemSelected = "";
-
-inventory_add("Hat", "Sword", "Hat", "Sword", "Sword", "Sword", "Hat", "Health Potion", "Speed Potion", "Health Potion", "Coffee Cup");
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Debug
+inventory_add("Dagger", "Golden Sword", "Imperial Chestplate", "Imperial Helmet", "Imperial Leggings", "Imperial Sandals", "Imperial Sword", "Iron Boots", "Iron Chestplate", "Iron Helmet", "Iron Leggings");
 </string>
           </argument>
         </arguments>
@@ -169,13 +189,14 @@ if (!buttonsCreated) {
             //create buttons with items
             if (ds_exists(equippableList, ds_type_list)) {
                 for (var i = 0; i &lt; ds_list_size(equippableList); i++) {
-                    if (i &gt;= 10) {
-                        xPos = 1056;
-                        yPos = 0;
-                    } else if (i &gt;= 5) {
+                    if (i == 5) {
                         xPos = 800;
                         yPos = 0;
                     }
+                    if (i == 10) {
+                        xPos = 1056;
+                        yPos = 0;
+                    } 
                     with (instance_create(xPos, 256 + yPos * 64, class_button)) {
                         sprite_index = spr_inv_button;
                         text = ds_list_find_value(other.equippableList, i);
@@ -193,10 +214,11 @@ if (!buttonsCreated) {
             //create buttons with items
             if (ds_exists(consumableList, ds_type_list)) {
                 for (var i = 0; i &lt; ds_list_size(consumableList); i++) {
-                    if (i &gt;= 10) {
+                    if (i == 10) {
                         xPos = 1056;
                         yPos = 0;
-                    } else if (i &gt;= 5) {
+                    } 
+                    if (i == 5) {
                         xPos = 800;
                         yPos = 0;
                     }
@@ -217,10 +239,11 @@ if (!buttonsCreated) {
             //create buttons with items
             if (ds_exists(miscList, ds_type_list)) {
                 for (var i = 0; i &lt; ds_list_size(miscList); i++) {
-                    if (i &gt;= 10) {
+                    if (i == 10) {
                         xPos = 1056;
                         yPos = 0;
-                    } else if (i &gt;= 5) {
+                    } 
+                    if (i == 5) {
                         xPos = 800;
                         yPos = 0;
                     }
@@ -843,7 +866,9 @@ ini_open("item_data.ini");
 
 if (ini_section_exists(itemSelected)) {
     var desc = ini_read_string(itemSelected, "desc", "");
-    draw_text(416, 608, "Description: " + desc);
+    var spr = asset_get_index(ini_read_string(itemSelected, "spr", ""));
+    draw_sprite_ext(spr, 0, 416, 624, 2, 2, 0, image_blend, 1);
+    draw_text(480, 608, "Description: " + desc);
     
     var num = "";
     for (var i = 1; i &lt; 3; i++) {
@@ -878,7 +903,7 @@ if (ini_section_exists(itemSelected)) {
             num += "   ";
         }
     }
-    draw_text(416, 640, num);
+    draw_text(480, 640, num);
 }
 
 ini_close();

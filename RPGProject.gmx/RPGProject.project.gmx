@@ -127,6 +127,32 @@
       <sprite>sprites\spr_allySpawnPoint</sprite>
       <sprite>sprites\spr_enemySpawnPoint</sprite>
     </sprites>
+    <sprites name="Items">
+      <sprite>sprites\spr_wooden_mace</sprite>
+      <sprite>sprites\spr_wooden_crossbow</sprite>
+      <sprite>sprites\spr_wooden_shield</sprite>
+      <sprite>sprites\spr_wooden_bow</sprite>
+      <sprite>sprites\spr_steel_broadsword</sprite>
+      <sprite>sprites\spr_hunting_rifle</sprite>
+      <sprite>sprites\spr_royal_shield</sprite>
+      <sprite>sprites\spr_metal_crossbow</sprite>
+      <sprite>sprites\spr_leather_tunic</sprite>
+      <sprite>sprites\spr_leather_trousers</sprite>
+      <sprite>sprites\spr_leather_helmet</sprite>
+      <sprite>sprites\spr_leather_boots</sprite>
+      <sprite>sprites\spr_iron_spear</sprite>
+      <sprite>sprites\spr_iron_leggings</sprite>
+      <sprite>sprites\spr_iron_helmet</sprite>
+      <sprite>sprites\spr_iron_chestplate</sprite>
+      <sprite>sprites\spr_iron_boots</sprite>
+      <sprite>sprites\spr_imperial_sword</sprite>
+      <sprite>sprites\spr_imperial_sandals</sprite>
+      <sprite>sprites\spr_imperial_leggings</sprite>
+      <sprite>sprites\spr_imperial_helmet</sprite>
+      <sprite>sprites\spr_imperial_chestplate</sprite>
+      <sprite>sprites\spr_golden_blade</sprite>
+      <sprite>sprites\spr_dagger</sprite>
+    </sprites>
     <sprite>sprites\spr_npc</sprite>
     <sprite>sprites\spr_narrator</sprite>
     <sprite>sprites\spr_menu_screen</sprite>
