@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="12" name="datafiles">
+  <datafiles number="13" name="datafiles">
     <datafile>
       <name>move_data.ini</name>
       <exists>-1</exists>
@@ -38,7 +38,7 @@
       </ConfigOptions>
       <filename>item_data.ini</filename>
     </datafile>
-    <datafiles number="12" name="Combat_Interactions">
+    <datafiles number="13" name="Combat_Interactions">
       <datafile>
         <name>npc_3.ini</name>
         <exists>-1</exists>
@@ -57,8 +57,8 @@
         <filename>npc_3.ini</filename>
       </datafile>
     </datafiles>
-    <datafiles number="12" name="Text_Interactions">
-      <datafiles number="12" name="Flan_Bedroom">
+    <datafiles number="13" name="Text_Interactions">
+      <datafiles number="13" name="Flan_Bedroom">
         <datafile>
           <name>bedroom.ini</name>
           <exists>-1</exists>
@@ -77,9 +77,9 @@
           <filename>bedroom.ini</filename>
         </datafile>
       </datafiles>
-      <datafiles number="12" name="NPC_1">
+      <datafiles number="13" name="Oat">
         <datafile>
-          <name>npc_1_main_room.ini</name>
+          <name>oat_main_room.ini</name>
           <exists>-1</exists>
           <size>130</size>
           <exportAction>2</exportAction>
@@ -93,7 +93,26 @@
               <CopyToMask>9223372036854775807</CopyToMask>
             </Config>
           </ConfigOptions>
-          <filename>npc_1_main_room.ini</filename>
+          <filename>oat_main_room.ini</filename>
+        </datafile>
+      </datafiles>
+      <datafiles number="13" name="Flan_Outside_Home">
+        <datafile>
+          <name>robocop_1.ini</name>
+          <exists>-1</exists>
+          <size>419</size>
+          <exportAction>2</exportAction>
+          <exportDir></exportDir>
+          <overwrite>0</overwrite>
+          <freeData>-1</freeData>
+          <removeEnd>0</removeEnd>
+          <store>0</store>
+          <ConfigOptions>
+            <Config name="Default">
+              <CopyToMask>9223372036854775807</CopyToMask>
+            </Config>
+          </ConfigOptions>
+          <filename>robocop_1.ini</filename>
         </datafile>
       </datafiles>
     </datafiles>
@@ -106,7 +125,10 @@
       <sprite>sprites\spr_map</sprite>
       <sprite>sprites\spr_pause_button</sprite>
       <sprite>sprites\spr_main_menu_start</sprite>
+      <sprite>sprites\spr_button</sprite>
       <sprite>sprites\spr_inv_button</sprite>
+      <sprite>sprites\spr_combat_panel_2</sprite>
+      <sprite>sprites\spr_combat_panel</sprite>
     </sprites>
     <sprites name="Player">
       <sprite>sprites\spr_player_idle</sprite>
@@ -119,6 +141,7 @@
     <sprites name="Environment">
       <sprite>sprites\spr_wall</sprite>
       <sprite>sprites\spr_door</sprite>
+      <sprite>sprites\spr_door_actual</sprite>
       <sprites name="Bedroom">
         <sprite>sprites\spr_bed_top</sprite>
       </sprites>
@@ -153,13 +176,21 @@
       <sprite>sprites\spr_golden_blade</sprite>
       <sprite>sprites\spr_dagger</sprite>
     </sprites>
-    <sprite>sprites\spr_npc</sprite>
+    <sprites name="Oat">
+      <sprite>sprites\spr_oat_idle</sprite>
+      <sprite>sprites\spr_oat_head</sprite>
+    </sprites>
+    <sprite>sprites\spr_robocop</sprite>
+    <sprite>sprites\spr_robocop_head</sprite>
     <sprite>sprites\spr_narrator</sprite>
     <sprite>sprites\spr_menu_screen</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_map</background>
     <background>background\bg_house</background>
+    <background>background\bg_grass</background>
+    <background>background\bg_greenery</background>
+    <background>background\bg_buildings</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -191,15 +222,17 @@
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_pixel</font>
-    <font>fonts\fnt_arial16</font>
+    <font>fonts\fnt_arial</font>
   </fonts>
   <objects name="objects">
     <object>objects\class_nonGUI</object>
     <object>objects\class_player</object>
     <objects name="NPCs">
       <object>objects\class_npc</object>
-      <object>objects\npc_1</object>
+      <object>objects\npc_oat</object>
+      <object>objects\npc_robocop_1</object>
       <object>objects\interact_tv</object>
+      <object>objects\interact_flower</object>
       <object>objects\interact_bed</object>
       <object>objects\interact_dresser</object>
       <object>objects\interact_start</object>
@@ -221,6 +254,7 @@
       <object>objects\class_solid</object>
       <object>objects\class_wall</object>
       <object>objects\class_door</object>
+      <object>objects\obj_door</object>
       <object>objects\obj_bed_top</object>
     </objects>
     <objects name="GUI">

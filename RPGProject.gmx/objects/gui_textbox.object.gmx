@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>///Initialize Variables
 text = "";
-textFont = fnt_arial16;
+textFont = fnt_arial;
 textColor = c_black;
 spr = -1;
 
@@ -49,11 +49,11 @@ done = false;
 
 //these vars here are all set in the step event
 height = 0;
+width = 0;
 x1 = 0;
 y1 = 0;
 x2 = 0;
 y2 = 0;
-width = 0;
 </string>
           </argument>
         </arguments>
@@ -111,25 +111,21 @@ if (sprite_exists(spr)) {
     var w = sprite_get_width(spr);
     var h = sprite_get_height(spr);
 }
-x1 = controller_text.padding * 2 + w * 2;
+
 y1 = y - h/2 - padding;
-//not sure why I need to mult, but otherwise it clips
-x2 = room_width - controller_text.padding * 2.25 - w * 2;
-y2 = y + height - padding;
+y2 = y + height - padding;   
+if (orientation == LEFT) {
+    x1 = controller_text.padding * 2 + w * 2;
+    x2 = x1 + room_width/2; 
+} else if (orientation == RIGHT) {
+    x1 = controller_text.padding + controller_text.width - room_width/2;
+    x2 = x1 + room_width/2 - (controller_text.padding + w * 2);
+} else if (orientation == CENTER) {
+    x1 = controller_text.padding * 2;
+    x2 = controller_text.width;
+}
 width = (x2 - padding) - (x1 + padding);
 height = string_height(text);
-
-if (orientation == LEFT) {
-    if (string_width(text) &lt; width) {
-        x2 = x1 + string_width(text) + padding;
-        width = (x2 - padding) - (x1 + padding);
-    }
-} else if (orientation == RIGHT) {
-    if (string_width(text) &lt; width) {
-        x1 = x2 - string_width(text) - padding;
-        width = (x2 - padding) - (x1 + padding);
-    }
-}
 
 //if the width goes over the edge of the textbox
 if (string_width(text) &gt; width) {

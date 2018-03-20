@@ -31,7 +31,7 @@ depth = -9999;
 text = "";
 textColor = c_black;
 textAlpha = 1;
-textFont = fnt_arial16;
+textFont = fnt_arial;
 textXPos = 0;
 textYPos = 0;
 

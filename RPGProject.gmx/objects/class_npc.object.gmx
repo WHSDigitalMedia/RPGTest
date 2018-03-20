@@ -36,9 +36,9 @@ moveType = FORWARD_BACK;
 randomTime = random_range(2 * room_speed, 4 * room_speed);
 xTarg = x;
 yTarg = y;
-moveSpeed = 2;
-deadband = 2;
-maxDist = 64;
+moveSpeed = 1;
+deadband = 1;
+maxDist = 32;
 alarm_set(0, -1);
 
 //forward back motion
@@ -426,7 +426,11 @@ if (!textCreated) {
                 //use asset_get_index because GMS won't recognize a string
                 spr = asset_get_index(ini_read_string(other.sprSection, string(pos), "-1"));
                 //alternate the orientation of the sprite
-                orientation = pos % 2;
+                if (spr == spr_flan_head) {
+                    orientation = RIGHT;
+                } else {
+                    orientation = LEFT;
+                }
                 order = pos;
             }
             

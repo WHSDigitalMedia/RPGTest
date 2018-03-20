@@ -74,7 +74,7 @@ itemSelected = "";
           <argument>
             <kind>1</kind>
             <string>///Debug
-//inventory_add("Dagger", "Golden Sword", "Imperial Chestplate", "Imperial Helmet", "Imperial Leggings", "Imperial Sandals", "Imperial Sword", "Iron Boots", "Iron Chestplate", "Iron Helmet", "Iron Leggings");
+inventory_add("Dagger", "Golden Sword", "Imperial Chestplate", "Imperial Helmet", "Imperial Leggings", "Imperial Sandals", "Imperial Sword", "Iron Boots", "Iron Chestplate", "Iron Helmet", "Iron Leggings");
 </string>
           </argument>
         </arguments>
@@ -201,10 +201,9 @@ if (!buttonsCreated) {
                         sprite_index = spr_inv_button;
                         text = ds_list_find_value(other.equippableList, i);
                         overAction = show_inv_desc;
-                        leaveAction = set_text_color_black;
                         clickAction = inventory_equip;
                         textAlign = LEFT;
-                        textXPos = -sprite_width/2 + 4;
+                        textXPos = -sprite_width/2 + 12;
                     }
                     yPos++;
                 }
@@ -226,10 +225,9 @@ if (!buttonsCreated) {
                         sprite_index = spr_inv_button;
                         text = ds_list_find_value(other.consumableList, i);
                         overAction = show_inv_desc;
-                        leaveAction = set_text_color_black;
                         clickAction = inventory_equip;
                         textAlign = LEFT;
-                        textXPos = -sprite_width/2 + 4;
+                        textXPos = -sprite_width/2 + 12;
                     }
                     yPos++;
                 }
@@ -251,10 +249,9 @@ if (!buttonsCreated) {
                         sprite_index = spr_inv_button;
                         text = ds_list_find_value(other.miscList, i);
                         overAction = show_inv_desc;
-                        leaveAction = set_text_color_black;
                         clickAction = inventory_equip;
                         textAlign = LEFT;
-                        textXPos = -sprite_width/2 + 4;
+                        textXPos = -sprite_width/2 + 12;
                     }
                     yPos++;
                 }
@@ -269,10 +266,9 @@ if (!buttonsCreated) {
                 sprite_index = spr_inv_button;
                 text = ds_list_find_value(other.equippedList, i);
                 overAction = show_inv_desc;
-                leaveAction = set_text_color_black;
                 clickAction = inventory_unequip;
                 textAlign = LEFT;
-                textXPos = -sprite_width/2 + 4;
+                textXPos = -sprite_width/2 + 12;
             }
         }
     }

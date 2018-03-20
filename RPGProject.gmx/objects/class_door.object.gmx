@@ -314,7 +314,6 @@ if (room == rm_map_menu) {
             <kind>1</kind>
             <string>///Draw the name of the destination
 if (point_in_rectangle(mouse_x, mouse_y, x - sprite_width/2, y - sprite_height/2, x + sprite_width/2, y + sprite_height/2)) {
-    draw_set_font(fnt_arial16);
     draw_set_halign(fa_center);
     
     draw_text_colour(x, y + sprite_height, name, c_black, c_black, c_black, c_black, 1);

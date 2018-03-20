@@ -65,12 +65,14 @@ switch (mode) {
     case FIXED:
         view_enabled = true;
         view_visible[0] = true;
+        class_player.moveSpeed = 1;
         break;
     case TRACK:
         view_enabled = true;
         view_visible[0] = true;
         xTarg = class_player.x;
         yTarg = class_player.y;
+        class_player.moveSpeed = 2;
         break;
     default: break;
 }

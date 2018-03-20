@@ -88,7 +88,7 @@ var pos = 1;
 do {
     var enemySpawn = instance_find(class_enemySpawn, pos);
     var enemy = asset_get_index(ini_read_string("Enemies", string(pos), ""));
-    instance_create(enemySpawn.x, enemySpawn.y, enemy);
+    if (object_exists(enemy)) instance_create(enemySpawn.x, enemySpawn.y, enemy);
     pos++;
 } until (!ini_key_exists("Enemies", string(pos)));
 
