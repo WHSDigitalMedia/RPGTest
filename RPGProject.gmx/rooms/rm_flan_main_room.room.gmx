@@ -61,7 +61,7 @@
     <instance objName="class_wall" x="432" y="352" name="inst_F80FA146" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="class_door" x="640" y="208" name="inst_39D53DCD" locked="0" code="xTarg = 512;&#xA;yTarg = 224;&#xA;roomTarg = rm_flan_bedroom;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="npc_oat" x="400" y="208" name="inst_79E34F70" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="class_door" x="464" y="336" name="inst_B303E055" locked="0" code="xTarg = 331;&#xA;yTarg = 289;&#xA;roomTarg = rm_flan_outside_home;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="class_door" x="464" y="336" name="inst_B303E055" locked="0" code="xTarg = 736;&#xA;yTarg = 448;&#xA;roomTarg = rm_flan_outside_home;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="class_wall" x="592" y="272" name="inst_79EB4FD1" locked="0" code="" scaleX="-6" scaleY="4" colour="4294967295" rotation="0"/>
     <instance objName="interact_flower" x="384" y="304" name="inst_B00B03B4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>

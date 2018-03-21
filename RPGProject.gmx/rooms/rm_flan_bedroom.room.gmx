@@ -74,7 +74,7 @@
     <instance objName="obj_bed_top" x="530" y="328" name="inst_6304963C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_door" x="512" y="192" name="inst_6B12C846" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="interact_start" x="432" y="304" name="inst_4BA7396B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="controller_audio" x="352" y="96" name="inst_20C4242C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="controller_audio" x="16" y="-64" name="inst_32FEC947" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bg_house" x="336" y="240" w="32" h="32" xo="96" yo="32" id="10000162" name="inst_127D03F4" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

@@ -503,18 +503,20 @@ if (moveSelected != "") {
         var type = 0;
         var amt = 0;
         var affect = 0;
+        var cost = 0;
         do {
             name = ini_read_string(string(move), "name", "");
             type = ini_read_real(string(move), "type", 0);
             amt = ini_read_real(string(move), "amount", 0);
             effect = ini_read_real(string(move), "stat", 0);
+            cost = ini_read_real(string(move), "cost", 0);
             move++;
         } until (name == moveSelected);
         if (type == 0) {
             var dmg;
-            if (effect == targ.PWR) {
+            if (effect == 0) {
                 dmg = amt + class_player.stat[class_player.PWR] - targ.stat[targ.DEF];
-            } else if (effect == targ.CPWR) {
+            } else if (effect == 1) {
                 dmg = amt + class_player.stat[class_player.CPWR] - targ.stat[targ.CDEF];
             }
             targ.stat[targ.HP] -= dmg;
@@ -525,6 +527,9 @@ if (moveSelected != "") {
         }
         ini_close();
         
+        with (class_player) {
+            stat[MP] -= cost;
+        }
         //get the next person to go
         instanceSelected = false;   
         //reset the selected move     
@@ -809,17 +814,50 @@ if (moveSelected != "") {
     //loop through the moves to find the one we want
     var pos = 0;
     var desc = "";
+    var type = 0;
+    var stat = 0;
+    var amt = 0;
+    var cost = 0;
     do {
         //copy the description if we found the move
         if (ini_read_string(string(pos), "name", "") == moveSelected) {
             desc = ini_read_string(string(pos), "desc", "");
+            type = ini_read_real(string(pos), "type", 0);
+            stat = ini_read_real(string(pos), "stat", 0);
+            amt = ini_read_real(string(pos), "amount", 0);
+            cost = ini_read_real(string(pos), "cost", 0);
         }
         pos++;
     //break once pos exceeds the number of moves
     } until (!ini_section_exists(string(pos)));
 
     draw_set_halign(fa_center);
-    draw_text(448, 512, desc);
+    draw_text(448, 480, desc);
+    
+    var tooltip = "";
+    switch (stat) {
+        case 0: 
+            tooltip = "Deals " + string(amt + class_player.stat[class_player.PWR]) + " damage. Costs " + string(cost) + " MP.";
+            break;
+        case 1: 
+            tooltip = "Deals " + string(amt + class_player.stat[class_player.CPWR]) + " C damage. Costs " + string(cost) + " MP.";
+            break;
+        case 2:
+            tooltip = "Buffs speed stat by " + string(amt) + ". Costs " + string(cost) + " MP.";
+            break; 
+        case 3: 
+            tooltip = "Buffs defense stat by " + string(amt) + ". Costs " + string(cost) + " MP.";
+            break;
+        case 4:
+            tooltip = "Buffs C defense stat by " + string(amt) + ". Costs " + string(cost) + " MP.";
+            break;
+        case 5: 
+            tooltip = "Restores " + string(amt) + " HP. Costs " + string(cost) + " MP.";
+            break;
+        default: break;
+    }
+
+    draw_text(448, 512, tooltip);
     draw_set_halign(fa_left);
     
     ini_close();

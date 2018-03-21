@@ -7,11 +7,13 @@ var name = "";
 var type = 0;
 var amt = 0;
 var affect = 0;
+var cost = 0;
 do {
     name = ini_read_string(string(move), "name", "");
     type = ini_read_real(string(move), "type", 0);
     amt = ini_read_real(string(move), "amount", 0);
-    affect = ini_read_real(string(move), "stat", 0);
+    effect = ini_read_real(string(move), "stat", 0);
+    cost = ini_read_real(string(move), "cost", 0);
     move++;
 } until (name == text);
 
@@ -21,12 +23,18 @@ if (type == 0 || type == 2 || type == 4) {
         moveSelected = other.text;
     }
 } else { //multi target
+    var dmg;
     if (type == 1) {
         for (var i = 0; i < instance_number(class_npc); i++) {
             var inst = instance_find(class_npc, i);
             if (inst.alignment == inst.ENEMY) {
+                if (effect == 0) {
+                    dmg = amt + class_player.stat[class_player.PWR] - inst.stat[inst.DEF];
+                } else if (effect == 1) {
+                    dmg = amt + class_player.stat[class_player.CPWR] - inst.stat[inst.CDEF];
+                }
                 with (inst) {
-                    stat[HP] -= amt;
+                    stat[HP] -= dmg;
                 }
             }
         }
@@ -49,13 +57,17 @@ if (type == 0 || type == 2 || type == 4) {
             var inst = instance_find(class_npc, i);
             if (inst.alignment == inst.targ) {
                 with (inst) {
-                    stat[affect] += amt;
+                    stat[effect] += amt;
                 }
             }
         }
     }
+    with (class_player) {
+        stat[MP] -= cost;
+    }
+    
     //get the next person to go
-    controller_combat.instanceSelected = false;
+    controller_combat.instanceSelected = false;   
 }
 
 ini_close();
