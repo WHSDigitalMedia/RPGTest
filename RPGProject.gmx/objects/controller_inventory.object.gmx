@@ -683,17 +683,13 @@ if (ds_exists(equippedList, ds_type_list)) {
           <argument>
             <kind>1</kind>
             <string>///Draw player stats
-draw_text(room_width/3 - 128, 64 + 48 * 0, "Power");
-draw_text(room_width/3 - 128, 64 + 48 * 1, "C Power");
-draw_text(room_width/3 - 128, 64 + 48 * 2, "Speed");
-draw_text(room_width/3 - 128, 64 + 48 * 3, "Defense");
-draw_text(room_width/3 - 128, 64 + 48 * 4, "C Defense");
-draw_text(room_width/3 - 128, 64 + 48 * 5, "HP");
-draw_text(room_width/3 - 128, 64 + 48 * 6, "MP");
-
-for (var i = 0; i &lt; array_length_1d(class_player.stat); i++) {
-    draw_text(room_width/3, 64 + i * 48, class_player.stat[i]);
-}
+draw_text(928, 544, "Power: " + string(class_player.stat[class_player.PWR]));
+draw_text(928, 544 + 32, "C Power: " + string(class_player.stat[class_player.CPWR]));
+draw_text(928, 544 + 32 * 2, "Speed: " + string(class_player.stat[class_player.SPD]));
+draw_text(928, 544 + 32 * 3, "Defense: " + string(class_player.stat[class_player.DEF]));
+draw_text(1120, 544, "C Defense: " + string(class_player.stat[class_player.CDEF]));
+draw_text(1120, 544 + 32, "HP: " + string(class_player.stat[class_player.HP]) + " / " + string(class_player.maxStat[class_player.HP]));
+draw_text(1120, 544 + 32 * 2, "MP: " + string(class_player.stat[class_player.MP]) + " / " + string(class_player.maxStat[class_player.MP]));
 </string>
           </argument>
         </arguments>

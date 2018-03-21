@@ -5,19 +5,23 @@ with (controller_pause) {
     if (global.pause != global.UNPAUSE) {
         texture_set_interpolation(false);
         room_goto(roomIndex);
-        global.pause = global.UNPAUSE;
         with (class_player) {
             allowMovement = true;
             allowInput = true;
             visible = true;
+            if (global.pause == global.COMBAT_PAUSE) {
+                x = other.savedPlayerX;
+                y = other.savedPlayerY;
+            }
         }
+        global.pause = global.UNPAUSE;
     } else { //saves the player's current room
         with (class_npc) { //they're annoying
             persistent = false;
         }
-        global.pause = global.STANDARD_PAUSE;
         roomIndex = room;
         draw = true;
+        global.pause = global.STANDARD_PAUSE;
     }
 }
 
@@ -72,6 +76,9 @@ with (controller_pause) {
 
 with (controller_pause) {
     global.pause = global.COMBAT_PAUSE;
+    with (class_player) {
+        visible = true;
+    }
     with (class_npc) {
         visible = true;
     }
@@ -79,5 +86,7 @@ with (controller_pause) {
     savedNPCX = inst.x;
     savedNPCY = inst.y
     createNPC = inst.object_index;
+    savedPlayerX = class_player.x;
+    savedPlayerY = class_player.y;
     room_goto(rm_combat_interaction);
 }

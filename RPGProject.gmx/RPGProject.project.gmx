@@ -118,7 +118,9 @@
     </datafiles>
   </datafiles>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\msc_flan_theme</sound>
+  </sounds>
   <sprites name="sprites">
     <sprites name="Buttons">
       <sprite>sprites\spr_backpack</sprite>
@@ -245,6 +247,7 @@
       <object>objects\controller_inventory</object>
       <object>objects\controller_camera</object>
       <object>objects\controller_combat</object>
+      <object>objects\controller_audio</object>
     </objects>
     <objects name="Combat">
       <object>objects\class_allySpawn</object>

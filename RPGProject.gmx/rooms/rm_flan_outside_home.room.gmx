@@ -6,8 +6,8 @@
   <vsnap>16</vsnap>
   <hsnap>16</hsnap>
   <isometric>0</isometric>
-  <speed>30</speed>
-  <persistent>0</persistent>
+  <speed>60</speed>
+  <persistent>-1</persistent>
   <colour>12632256</colour>
   <showcolour>-1</showcolour>
   <code></code>
@@ -62,7 +62,7 @@
     <instance objName="class_wall" x="432" y="272" name="inst_F987B013" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="class_wall" x="240" y="432" name="inst_78674CA2" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="class_wall" x="416" y="432" name="inst_3DEBD54E" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="npc_robocop_1" x="336" y="416" name="inst_B2E11C8B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="npc_robocop_1" x="336" y="400" name="inst_63563B53" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bg_grass" x="0" y="0" w="160" h="160" xo="0" yo="0" id="10000532" name="inst_DA2C0FB3" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

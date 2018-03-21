@@ -44,6 +44,9 @@ spr = -1; //the sprite the surface will draw
 savedNPCX = 0;
 savedNPCY = 0;
 createNPC = -1;
+
+savedPlayerX = 0;
+savedPlayerY = 0;
 </string>
           </argument>
         </arguments>
@@ -67,7 +70,7 @@ createNPC = -1;
           <argument>
             <kind>1</kind>
             <string>///Toggling Pause
-if (room != rm_text_interaction) { //so player can't exit text
+if (room != rm_text_interaction &amp;&amp; room != rm_combat_interaction) { //so player can't exit text
     if (keyboard_check_pressed(vk_escape)) {
         pause_game(); //toggling the standard pause
     } else if (keyboard_check_pressed(ord("M"))) {
@@ -107,6 +110,11 @@ if (global.pause != global.UNPAUSE &amp;&amp; (room == rm_pause_menu || rm_map_m
         }
     }
 } //what to do when unpausing is in the toggle pause event
+if (global.pause == global.COMBAT_PAUSE) {
+    with (class_player) {
+        visible = true;
+    }
+}
 </string>
           </argument>
         </arguments>

@@ -26,7 +26,6 @@
           <argument>
             <kind>1</kind>
             <string>///Initialize Variables
-
 //sets the order that combatants go in
 allyQueue = ds_priority_create();
 enemyQueue = ds_priority_create();
@@ -50,6 +49,10 @@ mode = MOVES;
 buttonsCreated = false;
 healthBarsCreated = false;
 moveSelected = ""; //is set to the name of the calling button instance
+buttonSelected = noone; //is set to the unique ID of the calling button instance
+
+index = 0;
+flip = false;
 </string>
           </argument>
         </arguments>
@@ -114,11 +117,9 @@ ini_close();
           <argument>
             <kind>1</kind>
             <string>///Create inventory toggle button
-with (instance_create(room_width * 0.8, room_height * 0.8, class_button)) {
+with (instance_create(1080, 482, class_button)) {
     sprite_index = spr_inv_button;
     text = "Show Inventory";
-    overAction = set_text_color_white;
-    leaveAction = set_text_color_black;
     clickAction = display_inv;
 }
 
@@ -329,6 +330,58 @@ if (!healthBarsCreated) {
       </action>
       <action>
         <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///flips the background panel
+if (flip) {
+    if (index &lt; sprite_get_number(spr_combat_panel)) {
+        index+=1/3;
+        //hide all the old buttons
+        with (class_button) {
+            if (clickAction != display_inv) {
+                visible = false;
+            }
+        }
+    } else {
+        flip = false;
+        if (mode == MOVES) {
+            moveSelected = targetButton.text;
+            buttonsCreated = false;
+            targetButton = noone;
+            mode = MOVES_DESC;
+        } else if (mode == MOVES_DESC) {
+            moveSelected = "";
+            buttonsCreated = false;
+            mode = MOVES;
+        }
+        //clear out all the old buttons
+        with (class_button) {
+            if (clickAction != display_inv) {
+                instance_destroy();
+            }
+        }
+    }
+} else {
+    index = 0;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>612</id>
         <kind>0</kind>
         <userelative>0</userelative>
@@ -386,28 +439,32 @@ if (!healthBarsCreated) {
           <argument>
             <kind>1</kind>
             <string>///Create the player's moves
-if (!buttonsCreated &amp;&amp; global.currentTurn == global.PLAYER_TURN) {
-    //clear out all the old buttons
-    with (class_button) {
-        if (clickAction != display_inv) {
-            instance_destroy();
-        }
-    }
-    
+if (!buttonsCreated &amp;&amp; global.currentTurn == global.PLAYER_TURN) {    
     ini_open("move_data.ini");
     
     var move = 0;
+    var yDist = 32;
     do {
-        with (instance_create(room_width/2, room_height * 0.8 + (move * 64), class_button)) {
-            sprite_index = spr_inv_button;
-            text = ini_read_string(string(move), "name", "");
-            overAction = set_text_color_white;
-            leaveAction = set_text_color_black;
-            clickAction = use_move;
-            altClickAction = display_desc;
-            textAlign = LEFT;
-            textXPos = -sprite_width/2 + 4;
-            mode = SINGLE_USE;
+        if (move &lt; 2) {
+            with (instance_create(288, 512 + (move * class_button.sprite_height) + (move * yDist), class_button)) {
+                sprite_index = spr_inv_button;
+                text = ini_read_string(string(move), "name", "");
+                clickAction = use_move;
+                altClickAction = display_desc;
+                textAlign = LEFT;
+                textXPos = -sprite_width/2 + 8;
+                mode = SINGLE_USE;
+            }
+        } else if (move &gt;= 2) {
+            with (instance_create(576, 512 + ((move - 2) * class_button.sprite_height) + ((move - 2) * yDist), class_button)) {
+                sprite_index = spr_inv_button;
+                text = ini_read_string(string(move), "name", "");
+                clickAction = use_move;
+                altClickAction = display_desc;
+                textAlign = LEFT;
+                textXPos = -sprite_width/2 + 8;
+                mode = SINGLE_USE;
+            }
         }
         move++;
     } until (!ini_section_exists(string(move)));
@@ -546,21 +603,11 @@ if (moveSelected != "") {
             <kind>1</kind>
             <string>///Create a button to go back
 if (!buttonsCreated) {
-    //clear out all the old buttons
-    with (class_button) {
-        if (clickAction != display_inv) {
-            instance_destroy();
-        }
-    }
-
-    with (instance_create(room_width/2, room_height/2, class_button)) {
+    with (instance_create(448, 608, class_button)) {
         sprite_index = spr_inv_button;
         text = "Return to moves"
-        overAction = set_text_color_white;
-        leaveAction = set_text_color_black;
         clickAction = display_desc;
-        textAlign = LEFT;
-        textXPos = -sprite_width/2 + 4;
+        textAlign = CENTER;
         mode = SINGLE_USE;     
     }
     buttonsCreated = true;
@@ -765,7 +812,9 @@ if (moveSelected != "") {
     //break once pos exceeds the number of moves
     } until (!ini_section_exists(string(pos)));
 
-    draw_text(room_width/2, room_height * 0.8, desc);
+    draw_set_halign(fa_center);
+    draw_text(448, 512, desc);
+    draw_set_halign(fa_left);
     
     ini_close();
 }
@@ -786,6 +835,30 @@ if (moveSelected != "") {
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draws the panel
+draw_sprite(spr_combat_panel, index, 452, 562);
+</string>
+          </argument>
+        </arguments>
       </action>
     </event>
   </events>

@@ -69,20 +69,28 @@ ALLY = 0;
 ENEMY = 1;
 alignment = ENEMY;
 //stats
-ATK = 0;
-DEF = 1;
+PWR = 0;
+CPWR = 1;
 SPD = 2;
-ACC = 3;
-HP = 4;
-stat[ATK] = 10;
-stat[DEF] = 10;
-stat[SPD] = 12;
-stat[ACC] = 10;
-stat[HP] = 10;
-maxStat[ATK] = 20;
-maxStat[DEF] = 20;
+DEF = 3;
+CDEF = 4;
+HP = 5;
+MP = 6;
+
+stat[PWR] = 1;
+stat[CPWR] = 1;
+stat[SPD] = 3;
+stat[DEF] = 2;
+stat[CDEF] = 2;
+stat[HP] = 6;
+stat[MP] = 3;
+
+maxStat[PWR] = 20;
+maxStat[CPWR] = 20;
 maxStat[SPD] = 20;
-maxStat[ACC] = 20;
+maxStat[DEF] = 20;
+maxStat[CDEF] = 20;
+maxStat[MP] = stat[MP];
 maxStat[HP] = stat[HP];
 //move types
 SINGLE_ATTACK = 0;
@@ -736,6 +744,34 @@ if (room == rm_text_interaction) {
     visible = true;
     textCreated = false;
     responsesCreated = false;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///size control
+if (room == rm_combat_interaction) {
+    image_xscale = 2;
+    image_yscale = image_xscale;
+} else {
+    image_xscale = 1;
+    image_yscale = image_xscale;
 }
 </string>
           </argument>

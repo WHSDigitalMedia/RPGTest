@@ -62,7 +62,7 @@ maxStat[MP] = stat[MP];
 maxStat[HP] = stat[HP];
 
 //so the player defaults to facing the screen
-keyboard_lastkey = DOWN;
+image_index = 0;
 //for when we stop moving
 sprPrev = -1;
 </string>
@@ -173,6 +173,12 @@ if (allowMovement &amp;&amp; allowInput) {
 for (var i = 0; i &lt; array_length_1d(stat); i++) {
     stat[i] = clamp(stat[i], 0, maxStat[i]);
 }
+
+if (global.pause == global.COMBAT_PAUSE) {
+    sprite_index = spr_player_right;
+    image_speed = 0;
+    image_index = 0;
+}
 </string>
           </argument>
         </arguments>
@@ -216,6 +222,15 @@ if (keyboard_check_pressed(ord("R"))) game_restart();
           <argument>
             <kind>1</kind>
             <string>depth = -y;
+
+///size control
+if (room == rm_combat_interaction) {
+    image_xscale = 2;
+    image_yscale = image_xscale;
+} else {
+    image_xscale = 1;
+    image_yscale = image_xscale;
+}
 </string>
           </argument>
         </arguments>
