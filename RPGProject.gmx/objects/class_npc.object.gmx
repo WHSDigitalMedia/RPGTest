@@ -568,10 +568,20 @@ if (global.currentInstance == self &amp;&amp; global.currentTurn == global.ENEMY
             }
             ds_list_add(_tempList, instance_find(class_player, 0));
             var randPos = irandom(ds_list_size(_tempList) - 1);
+
             
+            var targ = ds_list_find_value(_tempList, randPos);            
             //deal damage
-            with (ds_list_find_value(_tempList, randPos)) {
-                stat[HP] -= ini_read_real(randomMove, "amount", 0);
+            with (targ) {
+                var amt = ini_read_real(randomMove, "amount", 0);
+                var effect = ini_read_real(randomMove, "stat", 0);
+                var dmg;
+                if (effect == PWR) {
+                    dmg = amt + stat[PWR] - targ.stat[targ.DEF];
+                } else if (effect == CPWR) {
+                    dmg = amt + stat[CPWR] - targ.stat[targ.CDEF];
+                }
+                stat[HP] -= dmg;
             }
             //clean up the list
             ds_list_destroy(_tempList);
@@ -582,13 +592,30 @@ if (global.currentInstance == self &amp;&amp; global.currentTurn == global.ENEMY
                 var inst = instance_find(class_npc, i);
                 if (inst.alignment == ALLY) {
                     with (inst) {
-                        stat[HP] -= ini_read_real(randomMove, "amount", 0);
+                        var amt = ini_read_real(randomMove, "amount", 0);
+                        var effect = ini_read_real(randomMove, "stat", 0);
+                        var dmg;
+                        if (effect == PWR) {
+                            dmg = amt + stat[PWR] - inst.stat[inst.DEF];
+                        } else if (effect == CPWR) {
+                            dmg = amt + stat[CPWR] - inst.stat[inst.CDEF];
+                        }
+                        stat[HP] -= dmg;
                     }
                 }
             }
             
-            with (instance_find(class_player, 0)) {
-                stat[HP] -= ini_read_real(randomMove, "amount", 0);
+            var targ = instance_find(class_player, 0);
+            with (targ) {
+                var amt = ini_read_real(randomMove, "amount", 0);
+                var effect = ini_read_real(randomMove, "stat", 0);
+                var dmg;
+                if (effect == PWR) {
+                    dmg = amt + stat[PWR] - targ.stat[targ.DEF];
+                } else if (effect == CPWR) {
+                    dmg = amt + stat[CPWR] - targ.stat[targ.CDEF];
+                }
+                stat[HP] -= dmg;
             }
             break;
         case 2:

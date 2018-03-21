@@ -507,15 +507,21 @@ if (moveSelected != "") {
             name = ini_read_string(string(move), "name", "");
             type = ini_read_real(string(move), "type", 0);
             amt = ini_read_real(string(move), "amount", 0);
-            affect = ini_read_real(string(move), "stat", 0);
+            effect = ini_read_real(string(move), "stat", 0);
             move++;
         } until (name == moveSelected);
         if (type == 0) {
-            targ.stat[targ.HP] -= amt;
+            var dmg;
+            if (effect == targ.PWR) {
+                dmg = amt + class_player.stat[class_player.PWR] - targ.stat[targ.DEF];
+            } else if (effect == targ.CPWR) {
+                dmg = amt + class_player.stat[class_player.CPWR] - targ.stat[targ.CDEF];
+            }
+            targ.stat[targ.HP] -= dmg;
         } else if (type == 2) {
             targ.stat[targ.HP] += amt;
         } else if (type == 4) {
-            targ.stat[affect] += amt;
+            targ.stat[effect] += amt;
         }
         ini_close();
         
